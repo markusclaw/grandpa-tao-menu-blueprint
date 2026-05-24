@@ -1,0 +1,1134 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  Grandpa Tao Kitchen — Menu Design Blueprint                   ║
+  ║  Live at: markusclaw.github.io/grandpa-tao-menu-blueprint      ║
+  ║  Created: May 24, 2026                                         ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grandpa Tao Kitchen — Menu Design Blueprint v1.0</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   BLUEPRINT STANDARD CSS v4.1 — Menu Edition
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0D0D0D;
+  --bg-surface: #161616;
+  --bg-elevated: #1E1E1E;
+  --bg-card: #1A1A1A;
+  --text-primary: #F0F0F0;
+  --text-secondary: #A0A0A0;
+  --text-tertiary: #666;
+  --border: #2A2A2A;
+  --border-light: #333;
+  --charcoal: #1a1a1a;
+  --cream: #f5f0e8;
+  --gold: #d4af37;
+  --terracotta: #b8765c;
+  --sage: #7a9b8e;
+  --accent: var(--gold);
+}
+
+[data-theme="light"] {
+  --bg: #f5f0e8;
+  --bg-surface: #edeae4;
+  --bg-elevated: #e5e2dc;
+  --bg-card: #FFFFFF;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4A4A4A;
+  --text-tertiary: #888;
+  --border: #D4D0C8;
+  --border-light: #C8C4BC;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 24px 0;
+  z-index: 100;
+}
+
+.sidebar-brand {
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.sidebar-brand h1 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.sidebar-brand .version {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.sidebar-brand .status {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 8px;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+.nav-group {
+  margin-bottom: 8px;
+}
+
+.nav-group-label {
+  padding: 8px 24px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-tertiary);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 24px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+
+.nav-item.active {
+  color: var(--gold);
+  border-left-color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.nav-num {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  min-width: 20px;
+}
+
+/* Main */
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+[data-theme="light"] .topbar {
+  background: rgba(245,243,239,0.85);
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.topbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.theme-toggle {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+/* Content */
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.section {
+  margin-bottom: 56px;
+  scroll-margin-top: 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 24px 0 12px;
+}
+
+.section h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 16px 0 8px;
+}
+
+.section p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: border-color 0.15s;
+}
+
+.card:hover {
+  border-color: var(--border-light);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.card-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Callouts */
+.callout {
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 13px;
+  border-left: 3px solid var(--accent);
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--text-secondary);
+}
+
+.callout.warn {
+  border-left-color: #E8956F;
+  background: rgba(232, 149, 111, 0.08);
+}
+
+.callout.critical {
+  border-left-color: #C75050;
+  background: rgba(199, 80, 80, 0.08);
+}
+
+.callout.info {
+  border-left-color: #6B9AC4;
+  background: rgba(107, 154, 196, 0.08);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+
+th {
+  text-align: left;
+  padding: 10px 16px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+tr:hover td {
+  background: var(--bg-elevated);
+}
+
+/* Code blocks */
+.schema {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.schema .kw { color: #E8956F; }
+.schema .type { color: #6B9AC4; }
+.schema .str { color: #7BA489; }
+.schema .table-name { color: #d4af37; font-weight: 600; }
+
+/* Lists */
+ul, ol {
+  margin: 8px 0 8px 20px;
+}
+
+li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 3px 0;
+}
+
+code {
+  background: var(--bg-elevated);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .main {
+    margin-left: 0;
+  }
+  .topbar {
+    padding: 12px 20px;
+  }
+  .content {
+    padding: 24px 20px;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .sidebar, .topbar { display: none; }
+  .main { margin-left: 0; }
+  body { background: #fff; color: #000; }
+  .content { max-width: 100%; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <h1>Grandpa Tao's Kitchen</h1>
+    <div class="version">Menu Design Blueprint v1.0</div>
+    <span class="status">ACTIVE</span>
+  </div>
+
+  <!-- FOUNDATION -->
+  <div class="nav-group">
+    <div class="nav-group-label">Overview</div>
+    <div class="nav-item active" data-section="overview" onclick="goTo('overview')">
+      <span class="nav-num">01</span> Project Overview
+    </div>
+    <div class="nav-item" data-section="restaurant-context" onclick="goTo('restaurant-context')">
+      <span class="nav-num">02</span> Restaurant Context
+    </div>
+    <div class="nav-item" data-section="design-direction" onclick="goTo('design-direction')">
+      <span class="nav-num">03</span> Design Direction
+    </div>
+  </div>
+
+  <!-- DESIGN SYSTEM -->
+  <div class="nav-group">
+    <div class="nav-group-label">Design System</div>
+    <div class="nav-item" data-section="visual-identity" onclick="goTo('visual-identity')">
+      <span class="nav-num">04</span> Visual Identity
+    </div>
+    <div class="nav-item" data-section="typography" onclick="goTo('typography')">
+      <span class="nav-num">05</span> Typography
+    </div>
+    <div class="nav-item" data-section="color-palette" onclick="goTo('color-palette')">
+      <span class="nav-num">06</span> Color Palette
+    </div>
+    <div class="nav-item" data-section="spacing-grid" onclick="goTo('spacing-grid')">
+      <span class="nav-num">07</span> Spacing &amp; Grid
+    </div>
+  </div>
+
+  <!-- MENU ARCHITECTURE -->
+  <div class="nav-group">
+    <div class="nav-group-label">Menu Architecture</div>
+    <div class="nav-item" data-section="page-structure" onclick="goTo('page-structure')">
+      <span class="nav-num">08</span> Page Structure
+    </div>
+    <div class="nav-item" data-section="cover-welcome" onclick="goTo('cover-welcome')">
+      <span class="nav-num">09</span> Cover &amp; Welcome
+    </div>
+    <div class="nav-item" data-section="menu-sections" onclick="goTo('menu-sections')">
+      <span class="nav-num">10</span> Menu Sections
+    </div>
+  </div>
+
+  <!-- PRODUCTION -->
+  <div class="nav-group">
+    <div class="nav-group-label">Production</div>
+    <div class="nav-item" data-section="photography" onclick="goTo('photography')">
+      <span class="nav-num">11</span> Photography Guidelines
+    </div>
+    <div class="nav-item" data-section="materials" onclick="goTo('materials')">
+      <span class="nav-num">12</span> Materials &amp; Specs
+    </div>
+    <div class="nav-item" data-section="costs" onclick="goTo('costs')">
+      <span class="nav-num">13</span> Cost Estimation
+    </div>
+  </div>
+
+  <!-- EXECUTION -->
+  <div class="nav-group">
+    <div class="nav-group-label">Execution</div>
+    <div class="nav-item" data-section="prototype-plan" onclick="goTo('prototype-plan')">
+      <span class="nav-num">14</span> Prototype Execution Plan
+    </div>
+    <div class="nav-item" data-section="next-steps" onclick="goTo('next-steps')">
+      <span class="nav-num">15</span> Next Steps
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="breadcrumb" id="breadcrumb">01 — Project Overview</div>
+    <div class="topbar-right">
+      <span class="topbar-badge">15 Sections</span>
+      <span class="topbar-badge">v1.0</span>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="themeIcon">☀</span>
+        <span id="themeLabel">Light</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- 01. PROJECT OVERVIEW -->
+    <div class="section" id="overview">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Project Overview</h2>
+      </div>
+      
+      <p>
+        <strong>Project:</strong> Grandpa Tao Kitchen Menu Redesign<br>
+        <strong>Objective:</strong> Modernize menu from dated laminated format to premium, editorial-style printed menus<br>
+        <strong>Scope:</strong> Complete visual identity system, 16-page menu design, material specifications, and prototype execution<br>
+        <strong>Phase:</strong> 1 (Prototype) — 3–4 sample menus for owner feedback before full production
+      </p>
+
+      <div class="stats-row">
+        <div class="card">
+          <div class="card-label">Location</div>
+          <div class="card-value" style="font-size:16px;">El Cajon, CA</div>
+          <div class="card-detail">1190 N 2ND ST</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Cuisine</div>
+          <div class="card-value" style="font-size:16px;">Vietnamese</div>
+          <div class="card-detail">Asian Fusion</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Style</div>
+          <div class="card-value" style="font-size:16px;">Modern Bistro</div>
+          <div class="card-detail">Contemporary &amp; Warm</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Timeline</div>
+          <div class="card-value" style="font-size:16px;">1–2 weeks</div>
+          <div class="card-detail">Prototype</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <strong>Key Insight:</strong> Current laminated menu looks dated and undercuts the restaurant's actual food quality. Moving to synthetic paper with premium typography and curated imagery will elevate perceived value and support higher customer spending.
+      </div>
+    </div>
+
+    <!-- 02. RESTAURANT CONTEXT -->
+    <div class="section" id="restaurant-context">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Restaurant Context</h2>
+      </div>
+      
+      <h3>Current State Problems</h3>
+      <ul>
+        <li><strong>Visual Overload:</strong> Too many photos, tiny text, inconsistent spacing</li>
+        <li><strong>Cheap Perception:</strong> Laminated multi-page menu undermines food quality despite excellent cooking</li>
+        <li><strong>Poor Hierarchy:</strong> No clear visual priority — everything competes for attention</li>
+        <li><strong>Dated Aesthetic:</strong> Red binder frame and cluttered layout feel generic, not intentional</li>
+      </ul>
+
+      <h3>Menu Offerings</h3>
+      <p>Categories: Starters, Vermicelli Bowls, Rice Plates, Noodles, Bánh Mì, Sushi, Drinks, Desserts</p>
+      <p>Estimated items: 60–80 total across all categories</p>
+      <p>Price range: $5–18 (entry-level accessible, mid-market casual dining)</p>
+
+      <h3>Target Outcome</h3>
+      <p>Transform perceived value from "takeout menu" to "modern Vietnamese bistro" — making customers feel they're choosing something curated and premium, not just ordering off a list.</p>
+    </div>
+
+    <!-- 03. DESIGN DIRECTION -->
+    <div class="section" id="design-direction">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Design Direction</h2>
+      </div>
+      
+      <h3>Positioning</h3>
+      <p><strong>From:</strong> Laminated takeout menu (visual chaos)</p>
+      <p><strong>To:</strong> Modern Vietnamese Bistro (editorial, curated, warm)</p>
+
+      <h3>Core Principles</h3>
+      <ul>
+        <li><strong>Curated over Complete:</strong> Show less, show it better. One hero image per section, not scattered thumbnails.</li>
+        <li><strong>Breathable Design:</strong> Aggressive whitespace = premium perception</li>
+        <li><strong>Editorial Aesthetic:</strong> Typography-driven, not photography-driven</li>
+        <li><strong>Intentional Hierarchy:</strong> Guide the eye; control decision-making</li>
+        <li><strong>Warm &amp; Approachable:</strong> Not sterile or overly fancy — inviting and genuine</li>
+      </ul>
+
+      <h3>Emotional Direction</h3>
+      <table>
+        <thead>
+          <tr><th>Current Feel</th><th>Target Feel</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Generic, crowded</td><td>Intentional, curated</td></tr>
+          <tr><td>Overwhelming choices</td><td>Guided discovery</td></tr>
+          <tr><td>Lower-end casual</td><td>Premium casual</td></tr>
+          <tr><td>Multiple focuses</td><td>One clear story per page</td></tr>
+          <tr><td>Dated</td><td>Timeless modern</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 04. VISUAL IDENTITY -->
+    <div class="section" id="visual-identity">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Visual Identity</h2>
+      </div>
+
+      <h3>Brand Positioning</h3>
+      <p>Grandpa Tao's Kitchen is a neighborhood gathering place for authentic Vietnamese food made with family tradition and care. The menu should feel like an invitation to slow down and enjoy something genuine.</p>
+
+      <h3>Visual Attributes</h3>
+      <ul>
+        <li>Warm, not cold</li>
+        <li>Editorial, not commercial</li>
+        <li>Contemporary, not trendy</li>
+        <li>Accessible, not pretentious</li>
+        <li>Intentional, not accidental</li>
+      </ul>
+
+      <p><strong>Design Influences:</strong> Modern Vietnamese cafés, upscale ramen bars, minimalist Japanese typography, editorial food layouts, luxury hotel menus, contemporary Asian bistros.</p>
+    </div>
+
+    <!-- 05. TYPOGRAPHY -->
+    <div class="section" id="typography">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Typography System</h2>
+      </div>
+
+      <h3>Type Hierarchy</h3>
+
+      <table>
+        <thead>
+          <tr><th>Element</th><th>Font</th><th>Size</th><th>Weight</th><th>Usage</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Category Header</td><td>Serif (Playfair, Bodoni)</td><td>36–42pt</td><td>Bold</td><td>Section opener</td></tr>
+          <tr><td>Dish Name</td><td>Sans (Montserrat, Inter)</td><td>14–16pt</td><td>Bold</td><td>Menu item identifier</td></tr>
+          <tr><td>Description</td><td>Sans</td><td>11–12pt</td><td>Regular</td><td>Full dish details</td></tr>
+          <tr><td>Price</td><td>Sans</td><td>12pt</td><td>Regular</td><td>Right-aligned, no $ sign</td></tr>
+          <tr><td>Tagline</td><td>Script (elegant)</td><td>16–24pt</td><td>Regular</td><td>Emotional messaging</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Font Recommendations</h3>
+      <p><strong>Serif (elegant, headers):</strong> Playfair Display, Bodoni, Cormorant Garamond</p>
+      <p><strong>Sans (clean, body):</strong> Montserrat, Inter, Helvetica Neue, Helvetica</p>
+      <p><strong>Script (accents):</strong> Brush Script MT, Adelle Script (use sparingly)</p>
+
+      <div class="callout info">
+        <strong>Key Point:</strong> Typography drives the premium feel. Generous spacing between lines (1.6x line height), careful alignment, and clear hierarchy make the menu feel editorial and intentional.
+      </div>
+    </div>
+
+    <!-- 06. COLOR PALETTE -->
+    <div class="section" id="color-palette">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Color Palette</h2>
+      </div>
+
+      <h3>Primary Colors</h3>
+
+      <table>
+        <thead>
+          <tr><th>Color</th><th>Hex</th><th>Usage</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Deep Charcoal</td><td>#1a1a1a</td><td>Covers, dark backgrounds, primary text</td></tr>
+          <tr><td>Warm Ivory</td><td>#f5f0e8</td><td>Primary page background, breathing room</td></tr>
+          <tr><td>Gold/Brass</td><td>#d4af37</td><td>Foil accents, icons, separator lines, highlights</td></tr>
+          <tr><td>Muted Terracotta</td><td>#b8765c</td><td>Secondary accents, callouts, highlights</td></tr>
+          <tr><td>Sage Green</td><td>#7a9b8e</td><td>Fresh elements, soups section, accent borders</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Section Color Flow (Psychological Pacing)</h3>
+      <ul>
+        <li><strong>Starters:</strong> Warm cream + subtle gold accents</li>
+        <li><strong>Vermicelli:</strong> Fresh greens + botanical imagery</li>
+        <li><strong>Rice Plates:</strong> Warm neutrals + terracotta highlights</li>
+        <li><strong>Noodles:</strong> Deep browns + gold text (rich, indulgent)</li>
+        <li><strong>Bánh Mì:</strong> Light cream + illustrated details (daytime, lighter)</li>
+        <li><strong>Sushi:</strong> Minimal, centered on charcoal or cream</li>
+        <li><strong>Drinks:</strong> Vibrant yet soft accents (celebration)</li>
+      </ul>
+
+      <div class="callout info">
+        <strong>Color Strategy:</strong> Use color intentionally to guide emotion and pacing. Avoid monotone throughout — color variation between sections creates visual rhythm and prevents monotony.
+      </div>
+    </div>
+
+    <!-- 07. SPACING & GRID -->
+    <div class="section" id="spacing-grid">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>Spacing &amp; Grid System</h2>
+      </div>
+
+      <h3>Page Margins</h3>
+      <ul>
+        <li><strong>Outer margins:</strong> 0.75" (19mm) all sides</li>
+        <li><strong>Inner margins (gutter):</strong> 0.5" (13mm) between two-page spreads</li>
+        <li><strong>Top margin (first page):</strong> 1" to accommodate header breathing</li>
+      </ul>
+
+      <h3>Content Grid</h3>
+      <ul>
+        <li><strong>Column system:</strong> 2-column (left menu / right imagery) or single-column</li>
+        <li><strong>Baseline grid:</strong> 6pt (all text and elements align to 6pt grid)</li>
+        <li><strong>Spacing unit:</strong> 12pt (all whitespace in multiples of 12pt)</li>
+      </ul>
+
+      <h3>Whitespace Rules</h3>
+      <ul>
+        <li><strong>Between dish items:</strong> 18pt minimum (creates breathing room)</li>
+        <li><strong>Between sections:</strong> 36pt minimum (visual separation)</li>
+        <li><strong>Around images:</strong> 24pt minimum on all sides (images never touch edges)</li>
+        <li><strong>Line height (body text):</strong> 1.6x (relaxed, premium feel)</li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>Critical:</strong> Whitespace is not empty space — it's a design element. More whitespace = more premium perception. Never cram content.
+      </div>
+    </div>
+
+    <!-- 08. PAGE STRUCTURE -->
+    <div class="section" id="page-structure">
+      <div class="section-header">
+        <span class="section-num>8</span>
+        <h2>Page Structure (16 Pages)</h2>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Page(s)</th><th>Name</th><th>Purpose</th><th>Layout</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cover</td><td>Front Cover</td><td>First impression (dark, foil, logo)</td><td>Centered</td></tr>
+          <tr><td>1</td><td>Welcome Spread</td><td>Brand story + signature hero image</td><td>Left text / Right image</td></tr>
+          <tr><td>2–3</td><td>Starters &amp; Shareables</td><td>Appetizers, small plates</td><td>Left menu / Right photo</td></tr>
+          <tr><td>4–5</td><td>Vermicelli Bowls</td><td>Core category, fresh, light</td><td>Left menu / Right photo</td></tr>
+          <tr><td>6–7</td><td>Rice Plates</td><td>Core category, chef favorites highlighted</td><td>Left menu / Right photo</td></tr>
+          <tr><td>8–9</td><td>Noodles &amp; Garlic</td><td>Rich, savory, indulgent</td><td>Dark background</td></tr>
+          <tr><td>10–11</td><td>Bánh Mì &amp; Street</td><td>Light, café energy, fresh</td><td>Left menu / Right photo</td></tr>
+          <tr><td>12–13</td><td>Sushi</td><td>Minimal, elegant (no photos)</td><td>Centered list</td></tr>
+          <tr><td>14–15</td><td>Drinks &amp; Tea</td><td>Major upsell, beautiful, editorial</td><td>Left menu / Right photo</td></tr>
+          <tr><td>16</td><td>Closing</td><td>Thank you spread</td><td>Centered, decorative</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout info">
+        <strong>Total Pages:</strong> 16 (including cover and closing)<br>
+        <strong>Format:</strong> 8.5" × 11" or 11" × 14" (standard letter size recommended)<br>
+        <strong>Binding:</strong> Screw posts (hidden brass or stainless) or spiral coil<br>
+        <strong>Paper:</strong> Matte synthetic (waterproof, tear-resistant, premium feel)
+      </div>
+    </div>
+
+    <!-- 09. COVER & WELCOME -->
+    <div class="section" id="cover-welcome">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2>Cover &amp; Welcome Pages</h2>
+      </div>
+
+      <h3>Front Cover (Dark Charcoal Background)</h3>
+      <ul>
+        <li>Logo/icon (circular line art, 2" diameter, gold foil)</li>
+        <li>Brand name: "GRANDMA TAO'S" (Playfair, 48pt, gold foil or debossed)</li>
+        <li>Subtitle: "Kitchen" (script/light serif, 28pt, gold)</li>
+        <li>Tagline: "VIETNAMESE KITCHEN • TEA • SUSHI" (sans, 12pt, gold)</li>
+        <li>Decorative: Subtle botanical line drawings (bottom corners, light gold)</li>
+        <li>Est. year: "EST. 2016" (sans, 10pt, gold, bottom center)</li>
+        <li>Finish: Matte, potential light embossing on logo</li>
+      </ul>
+
+      <h3>Welcome Spread (Pages 1)</h3>
+      <p><strong>Left Page (Cream background):</strong> Brand story (centered block, ~250 words) telling Grandma Tao's vision, family tradition, and love of hospitality.</p>
+      <p><strong>Right Page (Dark charcoal):</strong> Full-bleed hero image of signature dish (Shaking Beef or Vermicelli Bowl) with overlay text "Grandma Tao's Favorites."</p>
+    </div>
+
+    <!-- 10. MENU SECTIONS -->
+    <div class="section" id="menu-sections">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2>Menu Sections (Detailed)</h2>
+      </div>
+
+      <h3>Signature Dishes (Chef Favorites)</h3>
+      <p>These should be visually highlighted and get hero photos:</p>
+      <ul>
+        <li><strong>Shaking Beef (Rice Plates):</strong> Highest profit, most-ordered, iconic dish</li>
+        <li><strong>Garlic Noodles (Noodles):</strong> Unique, crunchy, signature of the kitchen</li>
+        <li><strong>Lemongrass Vermicelli (Vermicelli):</strong> Fresh, visual, popular</li>
+        <li><strong>Vietnamese Coffee (Drinks):</strong> Cultural icon, simple, beautiful</li>
+        <li><strong>Egg Rolls (Starters):</strong> Familiar, accessible entry point</li>
+      </ul>
+
+      <h3>Item Presentation Format</h3>
+      <div class="schema">
+Dish Name 🌶
+Brief, evocative description of key ingredients and flavor profile.
+Served with accompanying sides and notes.
+16
+      </div>
+
+      <h3>Icon System</h3>
+      <ul>
+        <li>🌶 = Spicy</li>
+        <li>★ = Chef Favorite / Most Popular</li>
+        <li>🥬 = Vegetarian</li>
+        <li>GF = Gluten Friendly (if applicable)</li>
+      </ul>
+    </div>
+
+    <!-- 11. PHOTOGRAPHY -->
+    <div class="section" id="photography">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2>Photography Guidelines</h2>
+      </div>
+
+      <h3>Photo Specifications</h3>
+      <ul>
+        <li><strong>Resolution:</strong> 300 DPI (for print)</li>
+        <li><strong>Color space:</strong> RGB (convert to CMYK at print-ready stage)</li>
+        <li><strong>Dimensions:</strong> 6.5" × 8.5" minimum (full-bleed page size)</li>
+        <li><strong>Editing style:</strong> Warm, slightly saturated (appetizing, not over-processed)</li>
+      </ul>
+
+      <h3>Hero Shot Checklist</h3>
+      <table>
+        <thead>
+          <tr><th>Dish</th><th>Shot Type</th><th>Lighting</th><th>Background</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Shaking Beef</td><td>Close-up, overhead</td><td>Warm, moody, golden hour</td><td>Dark surface (plate/table)</td></tr>
+          <tr><td>Garlic Noodles</td><td>Overhead, action</td><td>Warm, steam visible</td><td>Dark charcoal surface</td></tr>
+          <tr><td>Vermicelli Bowl</td><td>Overhead, vibrant</td><td>Bright, natural, fresh</td><td>Neutral background</td></tr>
+          <tr><td>Vietnamese Coffee</td><td>3/4 angle, close-up</td><td>Bright, editorial</td><td>Rustic wood or marble</td></tr>
+          <tr><td>Egg Rolls</td><td>3/4 angle, grouped</td><td>Warm, crispy lighting</td><td>Woven basket, dark surface</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout info">
+        <strong>Photo Budget:</strong> Can use existing restaurant photos if high-quality, or hire professional photographer for 2–3 hours (~$400–800). Even smartphone photos with natural window light + minor editing can work for prototype.
+      </div>
+    </div>
+
+    <!-- 12. MATERIALS & SPECS -->
+    <div class="section" id="materials">
+      <div class="section-header">
+        <span class="section-num">12</span>
+        <h2>Materials &amp; Production Specs</h2>
+      </div>
+
+      <h3>Paper Specification</h3>
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Specification</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Material</td><td>Matte synthetic paper (Cosmo, TerraSlate, PVC White Matte)</td></tr>
+          <tr><td>Weight</td><td>14–15 mil thickness</td></tr>
+          <tr><td>Finish</td><td>Matte (not glossy)</td></tr>
+          <tr><td>Brightness</td><td>Slightly warm (off-white, not pure white)</td></tr>
+          <tr><td>Opacity</td><td>100% (no show-through)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Binding Specification</h3>
+      <p><strong>Option A: Screw Post (Recommended)</strong></p>
+      <ul>
+        <li>2 posts, 0.25" diameter, hidden brass or stainless steel</li>
+        <li>Posts positioned 0.5" from left edge, 0.75" from top & bottom</li>
+        <li>Allows page changes (upgrade-friendly)</li>
+        <li>Premium feel</li>
+      </ul>
+
+      <p><strong>Option B: Spiral Coil</strong></p>
+      <ul>
+        <li>Lies completely flat (customer convenience)</li>
+        <li>More casual appearance</li>
+        <li>Good for frequent updates</li>
+      </ul>
+
+      <h3>Finishing Options</h3>
+      <ul>
+        <li><strong>Foil Stamping (Recommended):</strong> Gold or silver foil on cover logo/title (+$0.75–1.50 per unit)</li>
+        <li><strong>Debossing:</strong> Logo pressed into cover (+$0.50–1.00 per unit)</li>
+        <li><strong>Embossing:</strong> Logo raised on cover (+$0.50–1.00 per unit)</li>
+        <li><strong>Texture:</strong> Subtle embossed texture on cover (+$0.25–0.50 per unit)</li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>Note:</strong> Synthetic paper is already waterproof and tear-resistant — no lamination needed. Laminating would add cost and thickness without benefit.
+      </div>
+    </div>
+
+    <!-- 13. COST ESTIMATION -->
+    <div class="section" id="costs">
+      <div class="section-header">
+        <span class="section-num">13</span>
+        <h2>Cost Estimation</h2>
+      </div>
+
+      <h3>Prototype Phase (3–4 Sample Menus)</h3>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Unit Cost</th><th>Qty</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Design (internal)</td><td>—</td><td>1</td><td>$0</td></tr>
+          <tr><td>Printing (synthetic, 16 pages)</td><td>$8–12</td><td>4</td><td>$32–48</td></tr>
+          <tr><td>Binding (screw posts)</td><td>$2–3</td><td>4</td><td>$8–12</td></tr>
+          <tr><td>Foil stamping (cover)</td><td>$1–2</td><td>4</td><td>$4–8</td></tr>
+          <tr><td><strong>Total</strong></td><td>—</td><td>—</td><td><strong>$44–68</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Production Phase (50–100 Unit Run)</h3>
+      <table>
+        <thead>
+          <tr><th>50 Units</th><th>Cost</th><th>100 Units</th><th>Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Printing</td><td>$300–500</td><td>Printing</td><td>$600–1,000</td></tr>
+          <tr><td>Binding &amp; finishing</td><td>$100–150</td><td>Binding &amp; finishing</td><td>$200–300</td></tr>
+          <tr><td>Foil stamping</td><td>$37–75</td><td>Foil stamping</td><td>$75–150</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>$437–725</strong></td><td><strong>Total</strong></td><td><strong>$875–1,450</strong></td></tr>
+          <tr><td><strong>Per unit</strong></td><td><strong>$8.74–14.50</strong></td><td><strong>Per unit</strong></td><td><strong>$8.75–14.50</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout info">
+        <strong>Cost Notes:</strong> Prices scale favorably with larger runs. 100-unit run costs roughly the same per-unit as 50-unit run, making larger production economical.
+      </div>
+    </div>
+
+    <!-- 14. PROTOTYPE EXECUTION PLAN -->
+    <div class="section" id="prototype-plan">
+      <div class="section-header">
+        <span class="section-num">14</span>
+        <h2>Prototype Execution Plan</h2>
+      </div>
+
+      <h3>Phase 1: Design Finalization (2–3 Days)</h3>
+      <ul>
+        <li><strong>Step 1:</strong> Confirm all menu items, pricing, and signatures with owner</li>
+        <li><strong>Step 2:</strong> Gather/shoot 5 hero photos (Shaking Beef, Garlic Noodles, Vermicelli, Coffee, Egg Rolls)</li>
+        <li><strong>Step 3:</strong> Create design files in InDesign or Canva (all 16 pages)</li>
+        <li><strong>Step 4:</strong> Export to high-quality PDF (CMYK, 300 DPI, bleeds included)</li>
+      </ul>
+
+      <h3>Phase 2: Print Prototype (1–2 Days)</h3>
+      <ul>
+        <li><strong>Step 5:</strong> Get quotes from 2–3 local printers (confirm synthetic paper capability)</li>
+        <li><strong>Step 6:</strong> Order 3–4 sample menus with foil stamping and binding</li>
+        <li><strong>Step 7:</strong> Inspect quality (color, binding, foil) when received</li>
+      </ul>
+
+      <h3>Phase 3: Owner Feedback (1–2 Days)</h3>
+      <ul>
+        <li><strong>Step 8:</strong> Present all prototypes to owner</li>
+        <li><strong>Step 9:</strong> Get specific feedback:
+          <ul>
+            <li>Does this feel premium?</li>
+            <li>Is the hierarchy clear?</li>
+            <li>Are descriptions helpful?</li>
+            <li>Should any dishes move/change?</li>
+          </ul>
+        </li>
+        <li><strong>Step 10:</strong> Iterate if needed (reprint 1 revised version for testing)</li>
+      </ul>
+
+      <h3>Phase 4: Production (5–7 Days)</h3>
+      <ul>
+        <li><strong>Step 11:</strong> Finalize all changes and approve designs</li>
+        <li><strong>Step 12:</strong> Place order for full run (50–100 menus)</li>
+        <li><strong>Step 13:</strong> Quality assurance on delivery</li>
+        <li><strong>Step 14:</strong> Deliver to restaurant</li>
+      </ul>
+
+      <div class="callout info">
+        <strong>Total Timeline:</strong> 10–14 days from design start to full production delivery.
+      </div>
+    </div>
+
+    <!-- 15. NEXT STEPS -->
+    <div class="section" id="next-steps">
+      <div class="section-header">
+        <span class="section-num">15</span>
+        <h2>Next Steps &amp; Deliverables</h2>
+      </div>
+
+      <h3>Immediate Actions (This Week)</h3>
+      <ol>
+        <li>Meet with owner; confirm all menu items, prices, and 5 signature dishes</li>
+        <li>Create clean item list (spreadsheet: name, description, price, category, flags)</li>
+        <li>Gather or shoot 5 hero photos (high-res, warm color grading)</li>
+        <li>Create design files using this blueprint as spec (Canva or InDesign)</li>
+        <li>Export PDF and send to printer for prototype quotes</li>
+      </ol>
+
+      <h3>Expected Deliverables</h3>
+      <ul>
+        <li>3–4 prototype menus (synthetic paper, foil, screw-post binding)</li>
+        <li>Owner feedback documentation</li>
+        <li>Revised design files (if needed)</li>
+        <li>Full production quote (50–100 unit run)</li>
+        <li>Timeline for completion</li>
+      </ul>
+
+      <div class="callout critical">
+        <strong>Success Metric:</strong> Owner feels the menu is premium, looks at the prototypes and says "This feels like a proper restaurant" instead of "This looks like a takeout menu."
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function goTo(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+    updateBreadcrumb(sectionId);
+    updateActiveNav(sectionId);
+  }
+}
+
+function updateBreadcrumb(sectionId) {
+  const navItem = document.querySelector(`[data-section="${sectionId}"]`);
+  if (navItem) {
+    const text = navItem.innerText;
+    document.getElementById('breadcrumb').innerText = text;
+  }
+}
+
+function updateActiveNav(sectionId) {
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const activeItem = document.querySelector(`[data-section="${sectionId}"]`);
+  if (activeItem) activeItem.classList.add('active');
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  
+  if (newTheme === 'light') {
+    icon.innerText = '🌙';
+    label.innerText = 'Dark';
+  } else {
+    icon.innerText = '☀';
+    label.innerText = 'Light';
+  }
+  
+  localStorage.setItem('theme', newTheme);
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+// Restore theme preference
+window.addEventListener('load', () => {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  
+  if (savedTheme === 'light') {
+    icon.innerText = '🌙';
+    label.innerText = 'Dark';
+  }
+});
+
+// Scroll spy for active nav
+window.addEventListener('scroll', () => {
+  let current = '';
+  const sections = document.querySelectorAll('.section');
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    if (pageYOffset >= sectionTop - 200) {
+      current = section.getAttribute('id');
+    }
+  });
+  
+  if (current) {
+    updateActiveNav(current);
+  }
+});
+</script>
+</body>
+</html>
