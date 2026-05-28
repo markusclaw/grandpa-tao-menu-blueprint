@@ -1,0 +1,41 @@
+# ─── macOS ─────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+Icon?
+
+# ─── Windows ───────────────────────────────────────────
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ─── Linux ─────────────────────────────────────────────
+*~
+.directory
+.Trash-*
+
+# ─── Editors / IDEs ────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~
+
+# ─── Build / temp ──────────────────────────────────────
+node_modules/
+.cache/
+*.log
+*.tmp
+*.bak
+*.orig
+*.rej
