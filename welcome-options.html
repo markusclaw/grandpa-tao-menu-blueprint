@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Welcome Page — A/B Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#f5f0e8; --cream-2:#ede6d8; --ink:#2a201a; --ink-soft:#5b4a3e;
+    --terracotta:#8b3a2a; --gold:#d4af37; --gold-soft:#b8932e;
+  }
+  html, body { margin:0; padding:0; background:#3a3a3a; font-family:'Inter',sans-serif; color:#fff; }
+  .header { padding:24px 32px; background:#1a1a1a; }
+  .header h1 { margin:0 0 4px; font:600 18px/1.2 'Inter'; }
+  .header p { margin:0; font:400 13px/1.5 'Inter'; color:#aaa; }
+  .compare {
+    display:grid; grid-template-columns:1fr 1fr; gap:32px;
+    max-width:1900px; margin:0 auto; padding:32px;
+  }
+  .opt-label {
+    text-align:center; margin-bottom:12px;
+    font:600 11px/1 'Inter'; letter-spacing:3px; text-transform:uppercase; color:#d4af37;
+  }
+  .opt-label .name { display:block; font:700 22px/1.2 'Playfair Display'; color:#fff; text-transform:none; letter-spacing:-0.5px; margin-top:8px; }
+  .opt-label .sub { display:block; font:400 12px/1.4 'Inter'; letter-spacing:0; text-transform:none; color:#888; margin-top:6px; max-width:380px; margin-left:auto; margin-right:auto; }
+  .page {
+    width:8.5in; height:11in; margin:0 auto;
+    background:var(--cream);
+    box-shadow:0 8px 32px rgba(0,0,0,0.4);
+    position:relative; overflow:hidden;
+    color:var(--ink);
+    transform:scale(0.72); transform-origin:top center;
+  }
+  .page-wrap { height:calc(11in * 0.72 + 24px); }
+  .inner { position:absolute; inset:0.75in; text-align:center; padding:1in 0.9in; }
+  .eyebrow { font:600 10px/1 'Inter'; letter-spacing:3px; text-transform:uppercase; color:var(--gold-soft); display:block; margin-bottom:16px; }
+  h2.title { font-family:'Playfair Display',serif; font-weight:700; font-size:48px; line-height:1.05; margin:0 0 8px; color:var(--ink); letter-spacing:-0.5px; }
+  .script { font-family:'Dancing Script',cursive; font-size:30px; color:var(--terracotta); display:block; margin-bottom:30px; }
+  .lead { font-family:'Playfair Display',serif; font-style:italic; font-size:18px; line-height:1.55; color:var(--ink-soft); margin:0 0 24px; }
+  p.body { font:400 13px/1.75 'Inter'; color:var(--ink-soft); margin:0 0 14px; text-align:center; }
+  .signoff { font-family:'Dancing Script',cursive; font-size:26px; color:var(--terracotta); margin-top:24px; }
+  .placeholder { background:#fff5d8; padding:0 4px; border-bottom:1px dashed #d4af37; color:#b8932e; font-style:italic; }
+  .notes {
+    max-width:1900px; margin:0 auto 48px; padding:0 32px;
+    display:grid; grid-template-columns:1fr 1fr; gap:32px;
+  }
+  .notes .card {
+    background:#222; padding:20px 24px; border-radius:8px; border-left:3px solid #d4af37;
+  }
+  .notes .card h3 { margin:0 0 12px; font:600 13px/1.2 'Inter'; color:#d4af37; letter-spacing:1px; text-transform:uppercase; }
+  .notes .card ul { margin:0; padding-left:18px; }
+  .notes .card li { font:400 13px/1.6 'Inter'; color:#ddd; margin-bottom:6px; }
+  .notes .card strong { color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Welcome page — A/B comparison</h1>
+  <p>Two voices for Page 02 of the menu. Highlighted yellow text is a <em>placeholder</em> I need real facts for. Pick A or B, send me the family details, and I'll lock it in.</p>
+</div>
+
+<div class="compare">
+
+  <!-- ─── OPTION A ───────────────────────────────────────── -->
+  <div>
+    <div class="opt-label">
+      Option A
+      <span class="name">Modern Vietnamese Bistro</span>
+      <span class="sub">Editorial, founder-led, premium. Vietnamese-forward voice; downplays the Chinese and Japanese items on the menu.</span>
+    </div>
+    <div class="page-wrap">
+      <div class="page">
+        <div class="inner">
+          <span class="eyebrow">Welcome to</span>
+          <h2 class="title">Grandpa Táo Kitchen</h2>
+          <span class="script">— a family table —</span>
+
+          <p class="lead">
+            Since <span class="placeholder">[YEAR]</span>, our family has cooked the way <span class="placeholder">[founder's full name]</span>
+            taught us — with slow broths, fresh herbs, and the kind of care you can taste.
+          </p>
+          <p class="body">
+            This is the food we grew up with: the bowl of phở waiting at the end of a long day,
+            the bánh mì pressed warm in the afternoon, the shaking beef that always brought
+            relatives back to the table.
+          </p>
+          <p class="body">
+            Everything is cooked to order, in small batches. We make the broth from scratch
+            every morning. We grind the lemongrass by hand. We don't take shortcuts —
+            because the food doesn't either.
+          </p>
+          <p class="body">
+            Take your time. Ask questions. Order something you've never tried.
+            We're glad you're here.
+          </p>
+          <div class="signoff">— with love, the <span class="placeholder">[family surname]</span> family</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── OPTION B ───────────────────────────────────────── -->
+  <div>
+    <div class="opt-label">
+      Option B
+      <span class="name">Elevated Asian Fusion</span>
+      <span class="sub">Pragmatic, food-forward, honest about the range. Acknowledges that Pho, Sushi, and Chinese-American favorites all coexist in the kitchen.</span>
+    </div>
+    <div class="page-wrap">
+      <div class="page">
+        <div class="inner">
+          <span class="eyebrow">Welcome to</span>
+          <h2 class="title">Grandpa Táo Kitchen</h2>
+          <span class="script">— Asian fusion, El Cajon —</span>
+
+          <p class="lead">
+            One kitchen. Many traditions. We cook what we love to eat.
+          </p>
+          <p class="body">
+            Our menu draws from <strong style="color:var(--ink);">Vietnam first</strong> — slow-simmered phở, fresh bún
+            bowls, lemongrass marinades, and bánh mì pressed to order — and from the
+            wider Asian table our cooks grew up with: <strong style="color:var(--ink);">Cantonese fried rice,
+            Japanese sushi, Thai-style iced tea</strong>, and the kind of crispy chicken
+            you crave on a Tuesday night.
+          </p>
+          <p class="body">
+            We use top-quality ingredients, cook everything to order, and don't shortcut
+            the broth — twelve hours, every morning. Whether you're here for a quick
+            bánh mì at lunch or a long phở at the end of a long day, we're glad you came.
+          </p>
+          <p class="body">
+            If you don't see what you want, ask. We'll make it the way you like.
+          </p>
+          <div class="signoff">— <span class="placeholder">[founder's name &amp; family]</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="notes">
+  <div class="card">
+    <h3>Option A — Modern Vietnamese Bistro</h3>
+    <ul>
+      <li><strong>Voice:</strong> intimate, founder-led, emotional</li>
+      <li><strong>Best if:</strong> the restaurant's identity really is Vietnamese-first and you want to lean into family heritage</li>
+      <li><strong>Risk:</strong> sets an expectation of Vietnamese authenticity that the General Tso / teriyaki / sushi items push against</li>
+      <li><strong>Needs from you:</strong> Tao's full name, year founded, family surname, anything specific about how he cooked or where he learned</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Option B — Elevated Asian Fusion</h3>
+    <ul>
+      <li><strong>Voice:</strong> confident, pragmatic, honest about the range</li>
+      <li><strong>Best if:</strong> you want to keep all the menu sections (sushi, Chinese-American, Thai tea) without any awkwardness</li>
+      <li><strong>Risk:</strong> less emotionally distinctive — could feel like any neighborhood spot if not paired with strong design</li>
+      <li><strong>Needs from you:</strong> just the founder's name &amp; family for the signoff</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

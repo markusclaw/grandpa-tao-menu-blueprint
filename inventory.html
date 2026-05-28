@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  Grandpa Táo Kitchen — Menu Inventory (shareable)               ║
+  ║                                                                  ║
+  ║  Standalone reference of every menu item, price, and Vietnamese ║
+  ║  name. Self-contained — share the URL or print the page.        ║
+  ║                                                                  ║
+  ║  Source of truth: menu-master.csv (same repo).                  ║
+  ║  Verified against printed menu + grandpa-tao-kitchen.square.site║
+  ║  as of May 2026.                                                ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Complete menu inventory for Grandpa Táo Kitchen — every item, price, and Vietnamese name. 1190 N 2nd St, El Cajon, CA.">
+<title>Menu Inventory — Grandpa Táo Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-soft: #F7F7F7;
+    --bg-card: #FFFFFF;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4A4A4A;
+    --text-tertiary: #888;
+    --border: #E5E5E5;
+    --border-light: #EFEFEF;
+    --gold: #b8932e;
+    --terracotta: #8b3a2a;
+    --sage: #7a9b8e;
+    --spicy: #b94c2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.55;
+    font-size: 14px;
+  }
+
+  /* ───── Header ───── */
+  .top-bar {
+    background: var(--text-primary);
+    color: #fff;
+    padding: 10px 24px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .top-bar a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .top-bar a:hover { color: #fff; }
+  .top-bar .meta {
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+  }
+
+  .page-header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 32px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .page-header .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+  .page-header .verified {
+    color: var(--text-tertiary);
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+  /* ───── Container ───── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 32px 64px;
+  }
+
+  /* ───── Summary cards ───── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 24px 0 32px;
+  }
+  @media (max-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .stat {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .stat__label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+  .stat__value {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .stat__detail {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* ───── Flag legend ───── */
+  .legend {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 16px 0 32px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+  .legend strong { color: var(--text-primary); }
+  .flag {
+    display: inline-block;
+    font: 600 9px/1.6 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  .flag--star  { background: var(--gold); color: #fff; }
+  .flag--spicy { background: var(--spicy); color: #fff; }
+  .flag--veg   { background: var(--sage); color: #fff; }
+  .flag--pop   { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); }
+
+  /* ───── Category header ───── */
+  .cat-header {
+    margin-top: 44px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--text-primary);
+  }
+  .cat-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+  }
+  .cat-header h2 em {
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+  .cat-header .cat-count {
+    color: var(--text-tertiary);
+    font-weight: 400;
+    font-size: 13px;
+    margin-left: 6px;
+  }
+  .cat-intro {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin: 10px 0 0;
+  }
+
+  /* ───── Item table ───── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg-soft);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  thead th.num { text-align: right; }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+  tbody td.num { text-align: right; font-feature-settings: "tnum"; white-space: nowrap; color: var(--text-primary); font-weight: 500; }
+  tbody td.code { font-family: 'SF Mono', 'Menlo', monospace; font-size: 11px; color: var(--text-tertiary); font-weight: 600; letter-spacing: 0.5px; }
+  tbody td.name { color: var(--text-primary); font-weight: 600; }
+  tbody td.vi   { font-family: 'Playfair Display', serif; font-style: italic; color: var(--text-secondary); }
+  tbody tr:hover td { background: var(--bg-soft); }
+
+  /* ───── Callout ───── */
+  .note {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--gold);
+    padding: 12px 16px;
+    margin: 20px 0;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    border-radius: 0 4px 4px 0;
+  }
+  .note strong { color: var(--text-primary); }
+  .note--warn { border-left-color: var(--spicy); background: rgba(185,76,46,0.04); }
+
+  /* ───── Footer ───── */
+  .page-footer {
+    max-width: 1100px;
+    margin: 64px auto 0;
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 12px;
+  }
+  .page-footer .contact {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .page-footer a { color: var(--gold); text-decoration: none; }
+  .page-footer a:hover { text-decoration: underline; }
+
+  /* ───── Print styles ───── */
+  @media print {
+    .top-bar, .no-print { display: none !important; }
+    body { font-size: 11px; }
+    .page-header { padding: 20px 0; }
+    .page-header h1 { font-size: 28px; }
+    .container { padding: 16px 0; }
+    .cat-header { page-break-after: avoid; }
+    .cat-header h2 { font-size: 18px; }
+    table { page-break-inside: avoid; font-size: 10px; }
+    .stat { background: #fff; }
+    .note, .legend { background: #fff; }
+  }
+
+  /* ───── Filter bar ───── */
+  .filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0 14px;
+    margin: 0 -32px 24px;
+    padding-left: 32px;
+    padding-right: 32px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+  .filter-search {
+    position: relative;
+    margin-bottom: 12px;
+  }
+  .filter-search input {
+    width: 100%;
+    padding: 12px 44px 12px 42px;
+    font: 400 14px/1.2 'Inter', sans-serif;
+    color: var(--text-primary);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .filter-search input:focus {
+    border-color: var(--text-primary);
+    background: var(--bg);
+  }
+  .filter-search::before {
+    content: "⌕";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--text-tertiary);
+    pointer-events: none;
+  }
+  .filter-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    color: var(--text-tertiary);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: none;
+  }
+  .filter-clear:hover { background: var(--bg-soft); color: var(--text-primary); }
+  .filter-search.has-value .filter-clear { display: block; }
+
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pill {
+    font: 500 11px/1 'Inter', sans-serif;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+  .pill:hover { border-color: var(--text-primary); color: var(--text-primary); }
+  .pill.active {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg);
+  }
+  .pill--tag.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .pill--tag.active.pill--veg   { background: var(--sage); border-color: var(--sage); }
+  .pill--tag.active.pill--spicy { background: var(--spicy); border-color: var(--spicy); }
+  .pill .pill__count {
+    margin-left: 6px;
+    opacity: 0.55;
+    font-size: 10px;
+  }
+  .pill.active .pill__count { opacity: 0.75; }
+
+  .filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+  }
+  .filter-label {
+    font: 600 10px/1 'Inter', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    align-self: center;
+    margin-right: 4px;
+  }
+
+  .filter-status {
+    margin: 0 0 18px;
+    padding: 10px 14px;
+    background: rgba(184,147,46,0.08);
+    border: 1px solid rgba(184,147,46,0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-primary);
+    display: none;
+  }
+  .filter-status.visible { display: block; }
+  .filter-status strong { color: var(--gold); }
+  .filter-status a {
+    color: var(--gold);
+    text-decoration: none;
+    margin-left: 8px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-tertiary);
+    display: none;
+  }
+  .empty-state.visible { display: block; }
+  .empty-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+  }
+
+  /* Generic hide rule — covers category headers, tables, intros, notes, anything */
+  .hidden { display: none !important; }
+
+  /* ───── Suggested-price column ───── */
+  thead th.suggested-col,
+  td.suggested-col {
+    background: rgba(212, 175, 55, 0.08);
+  }
+  thead th.suggested-col {
+    background: rgba(212, 175, 55, 0.14);
+    color: var(--gold);
+  }
+  td.suggested-col.suggested--up {
+    color: var(--sage);
+    font-weight: 600;
+  }
+  td.suggested-col.suggested--up .delta {
+    font-size: 11px;
+    margin-left: 4px;
+    font-weight: 500;
+    opacity: 0.85;
+  }
+  td.suggested-col.suggested--hold {
+    color: var(--text-tertiary);
+    font-style: italic;
+    font-weight: 400;
+  }
+  /* Keep tint subtle on row hover */
+  tbody tr:hover td.suggested-col { background: rgba(212, 175, 55, 0.14); }
+  .suggestion-note {
+    background: rgba(122,155,142,0.06);
+    border-left: 3px solid var(--sage);
+    padding: 12px 16px;
+    margin: 14px 0 24px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    border-radius: 0 4px 4px 0;
+  }
+  .suggestion-note strong { color: var(--sage); }
+  .suggestion-note a { color: var(--gold); text-decoration: none; font-weight: 600; }
+  .suggestion-note a:hover { text-decoration: underline; }
+
+  /* ───── Small responsive tweaks ───── */
+  @media (max-width: 700px) {
+    .page-header { padding: 32px 16px 16px; }
+    .page-header h1 { font-size: 32px; }
+    .container { padding: 20px 16px 40px; }
+    table { font-size: 11px; }
+    tbody td, thead th { padding: 6px 8px; }
+    .filter-bar { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
+  }
+
+  @media print {
+    .filter-bar, .filter-status { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar no-print">
+  <div>
+    <strong>Grandpa Táo Kitchen</strong> &nbsp;·&nbsp; <span class="meta">Menu Inventory — shareable reference</span>
+  </div>
+  <div>
+    <a href="https://grandpa-tao-kitchen.square.site/" target="_blank">🛒 Live Square menu</a> &nbsp;·&nbsp;
+    <a href="menu-master.csv" target="_blank">Download CSV</a> &nbsp;·&nbsp;
+    <a href="index.html">View blueprint →</a>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow">Asian Fusion · Pho · Tea · Sushi</div>
+  <h1>Menu Inventory</h1>
+  <div class="subtitle">Every item, every price, every Vietnamese name</div>
+  <div class="verified">
+    1190 N 2nd Street, El Cajon, CA 92021 &nbsp;·&nbsp; (619) 442-1211 &nbsp;·&nbsp; verified May 2026
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Summary stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__label">Food items</div>
+      <div class="stat__value">100</div>
+      <div class="stat__detail">8 categories · $5.50–$19.50</div>
+    </div>
+    <div class="stat">
+      <div class="stat__label">Drinks &amp; Alcohol</div>
+      <div class="stat__value">20</div>
+      <div class="stat__detail">16 beverages · 4 alcohol · $2.50–$28.99</div>
+    </div>
+    <div class="stat">
+      <div class="stat__label">Signature dishes</div>
+      <div class="stat__value">5 ★</div>
+      <div class="stat__detail">A2 · R24 · N7 · V10 · D2</div>
+    </div>
+    <div class="stat">
+      <div class="stat__label">Vegetarian (food)</div>
+      <div class="stat__value">17</div>
+      <div class="stat__detail">Across all food categories</div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <strong>Flags:</strong>
+    <span><span class="flag flag--star">★</span> Signature</span>
+    <span><span class="flag flag--pop">POP</span> Most popular</span>
+    <span><span class="flag flag--spicy">🌶</span> Spicy</span>
+    <span><span class="flag flag--veg">VEG</span> Vegetarian</span>
+  </div>
+
+  <!-- Filter / search bar -->
+  <div class="filter-bar no-print" id="filterBar">
+    <div class="filter-search" id="filterSearch">
+      <input type="search" id="searchInput" placeholder="Search by name, Vietnamese, code, or description…" autocomplete="off" spellcheck="false">
+      <button class="filter-clear" id="clearSearch" type="button" aria-label="Clear search">×</button>
+    </div>
+    <div class="filter-pills" id="categoryPills">
+      <button class="pill active" data-category="__all__">All categories</button>
+      <!-- category pills injected by JS -->
+    </div>
+    <div class="filter-tags">
+      <span class="filter-label">Filter by:</span>
+      <button class="pill pill--tag" data-tag="signature">★ Signature</button>
+      <button class="pill pill--tag pill--spicy" data-tag="spicy">🌶 Spicy</button>
+      <button class="pill pill--tag pill--veg" data-tag="veg">VEG Vegetarian</button>
+      <button class="pill pill--tag" data-tag="popular">POP Most popular</button>
+    </div>
+  </div>
+
+  <div class="filter-status" id="filterStatus">
+    Showing <strong id="visibleCount">0</strong> of <strong id="totalCount">0</strong> items.
+    <a id="resetFilters">Reset filters</a>
+  </div>
+
+  <div class="note">
+    <strong>Gaps in numbering for owner to confirm:</strong> A6 (between Spring Rolls &amp; Fried Shrimp); R14, R16, R17, R18 (Rice Plates); R14 has a photo on the printed menu but no listing. Possibly discontinued items.
+  </div>
+
+  <div class="suggestion-note">
+    <strong>Suggested column</strong> shows pricing recommendations from the
+    <a href="index.html#pricing" target="_blank">market price analysis</a> &mdash;
+    items in <span style="color:var(--sage); font-weight:600;">green</span> could be raised modestly; "&mdash;"
+    means no change suggested. 17 of 120 items have suggestions; estimated blended uplift if all adopted: +5&ndash;8% revenue.
+  </div>
+
+  <div class="empty-state" id="emptyState">
+    <h3>No items match</h3>
+    <p>Try a different search term or category.</p>
+  </div>
+
+  <!-- APPETIZERS -->
+  <div class="cat-header">
+    <h2>Appetizers &nbsp;<em>· Khai Vị</em><span class="cat-count">(20 items)</span></h2>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">A1</td><td class="name">Special Appetizer</td><td class="vi">Khai Vị Đặc Biệt</td><td>Two crispy egg rolls + two fresh spring rolls. Mixed sauces.</td><td class="num">$12.00</td><td></td></tr>
+      <tr><td class="code">A2</td><td class="name">Crispy Egg Rolls</td><td class="vi">Chả Giò</td><td>Four golden rolls — pork, chicken, taro, carrot. Light fish sauce.</td><td class="num">$9.50</td><td><span class="flag flag--star">★</span><span class="flag flag--pop">POP</span></td></tr>
+      <tr><td class="code">A3</td><td class="name">½ Order Crispy Egg Rolls (2)</td><td class="vi">—</td><td>Half portion. Available regular or vegetarian.</td><td class="num">$5.50</td><td></td></tr>
+      <tr><td class="code">A4</td><td class="name">Vegetarian Egg Rolls</td><td class="vi">Chả Giò Chay</td><td>Taro, carrot, glass noodles. Lettuce + fish sauce.</td><td class="num">$9.50</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">A5</td><td class="name">Spring Rolls</td><td class="vi">Gỏi Cuốn</td><td>Rice paper, protein of choice, vermicelli, herbs. Peanut sauce.</td><td class="num">$8.50</td><td><span class="flag flag--pop">POP</span></td></tr>
+      <tr><td class="code">A7</td><td class="name">Fried Battered Shrimp</td><td class="vi">Tôm Chiên Giòn</td><td>Light golden batter. Sweet chili sauce.</td><td class="num">$12.99</td><td></td></tr>
+      <tr><td class="code">A8</td><td class="name">Crispy Tofu, Garlic &amp; Pepper</td><td class="vi">Đậu Hủ Chiên Tỏi Tiêu</td><td>Garlic + cracked pepper. Sweet chili side.</td><td class="num">$10.99</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">A9</td><td class="name">Crispy Chicken Wings (6)</td><td class="vi">Cánh Gà Chiên</td><td>Battered &amp; sautéed with onions.</td><td class="num">$12.99</td><td></td></tr>
+      <tr><td class="code">A10</td><td class="name">Potstickers (8)</td><td class="vi">—</td><td>Pan-fried pork dumplings. Ponzu dip.</td><td class="num">$11.50</td><td></td></tr>
+      <tr><td class="code">A11</td><td class="name">Miso Soup</td><td class="vi">—</td><td>Tofu, seaweed, green onion.</td><td class="num">$7.00</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">A12</td><td class="name">Edamame with Salt</td><td class="vi">—</td><td>Steamed young soybeans.</td><td class="num">$9.00</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">A13</td><td class="name">Spicy Garlic Edamame</td><td class="vi">—</td><td>Garlic + chili flakes.</td><td class="num">$10.00</td><td><span class="flag flag--spicy">🌶</span><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">A14</td><td class="name">Seaweed Salad</td><td class="vi">Gỏi Rong Biển</td><td>Sesame seed garnish.</td><td class="num">$8.50</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">A15</td><td class="name">Egg Soup</td><td class="vi">Súp Trứng</td><td>Egg in chicken broth, spring onion, crispy wontons.</td><td class="num">$7.50</td><td></td></tr>
+      <tr><td class="code">A16</td><td class="name">Crab Rangoon (6)</td><td class="vi">—</td><td>Crab + cream cheese wontons.</td><td class="num">$8.50</td><td></td></tr>
+      <tr><td class="code">A17</td><td class="name">House Salad — Pork</td><td class="vi">—</td><td>Marinated pork over crisp vegetables.</td><td class="num">$10.99</td><td></td></tr>
+      <tr><td class="code">A18</td><td class="name">House Salad — Chicken</td><td class="vi">—</td><td>Grilled chicken strips.</td><td class="num">$10.99</td><td></td></tr>
+      <tr><td class="code">A19</td><td class="name">House Salad — Beef</td><td class="vi">—</td><td>Sliced beef.</td><td class="num">$11.99</td><td></td></tr>
+      <tr><td class="code">A20</td><td class="name">House Salad — Shrimp</td><td class="vi">—</td><td>Succulent shrimp.</td><td class="num">$11.99</td><td></td></tr>
+      <tr><td class="code">A21</td><td class="name">House Salad — Tofu</td><td class="vi">—</td><td>Tofu slices.</td><td class="num">$9.99</td><td><span class="flag flag--veg">VEG</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- BÁNH MÌ -->
+  <div class="cat-header">
+    <h2>Bánh Mì <span class="cat-count">(8 items)</span></h2>
+    <p class="cat-intro">All sandwiches: Vietnamese baguette, spicy mayo, pickled daikon &amp; carrot, cucumber, cilantro, jalapeño.</p>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">B1</td><td class="name">BBQ Pork</td><td class="vi">Bánh Mì Sườn Nướng</td><td>Grilled marinated pork.</td><td class="num">$8.99</td><td></td></tr>
+      <tr><td class="code">B2</td><td class="name">BBQ Chicken</td><td class="vi">Bánh Mì Gà Nướng</td><td>Grilled marinated chicken.</td><td class="num">$8.99</td><td></td></tr>
+      <tr><td class="code">B3</td><td class="name">BBQ Beef</td><td class="vi">Bánh Mì Bò Nướng</td><td>Grilled marinated beef.</td><td class="num">$9.99</td><td></td></tr>
+      <tr><td class="code">B4</td><td class="name">BBQ Shrimp</td><td class="vi">Bánh Mì Tôm Nướng</td><td>Grilled shrimp.</td><td class="num">$9.50</td><td></td></tr>
+      <tr><td class="code">B5</td><td class="name">Fried Egg</td><td class="vi">Bánh Mì Trứng Ốp La</td><td>Simple fried egg.</td><td class="num">$8.50</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">B6</td><td class="name">Tofu</td><td class="vi">Bánh Mì Đậu Hủ</td><td>Marinated tofu.</td><td class="num">$8.99</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">B7</td><td class="name">Lemongrass Beef</td><td class="vi">Bánh Mì Bò Xào Sả</td><td>Lemongrass marinade.</td><td class="num">$10.50</td><td></td></tr>
+      <tr><td class="code">B8</td><td class="name">Lemongrass Chicken</td><td class="vi">Bánh Mì Gà Xào Sả</td><td>Lemongrass marinade.</td><td class="num">$9.99</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHỞ -->
+  <div class="cat-header">
+    <h2>Phở <span class="cat-count">(17 items)</span></h2>
+    <p class="cat-intro">All bowls served with fresh basil, bean sprouts, lime, jalapeño, and house chili + hoisin.</p>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">P1</td><td class="name">House Special</td><td class="vi">Phở Đặc Biệt</td><td>Rare steak, chicken, shrimp.</td><td class="num">$16.50</td><td></td></tr>
+      <tr><td class="code">P2</td><td class="name">Well Done Steak</td><td class="vi">Phở Chín</td><td>Fully cooked beef. No raw cuts.</td><td class="num">$14.99</td><td><span class="flag flag--pop">POP</span></td></tr>
+      <tr><td class="code">P3</td><td class="name">Rare Steak</td><td class="vi">Phở Tái</td><td>Thin rare steak cooked in hot broth.</td><td class="num">$14.99</td><td><span class="flag flag--pop">POP</span></td></tr>
+      <tr><td class="code">P4</td><td class="name">Rare &amp; Well Done</td><td class="vi">Phở Tái Chín</td><td>Combination of P2 + P3.</td><td class="num">$15.50</td><td></td></tr>
+      <tr><td class="code">P5</td><td class="name">Combination Special</td><td class="vi">—</td><td>Rare steak, brisket, tendon, tripe, meatballs.</td><td class="num">$16.50</td><td></td></tr>
+      <tr><td class="code">P6</td><td class="name">Chicken</td><td class="vi">Phở Gà</td><td>Sliced chicken in light broth.</td><td class="num">$15.00</td><td></td></tr>
+      <tr><td class="code">P7</td><td class="name">Shrimp</td><td class="vi">—</td><td>Tender shrimp in savory broth.</td><td class="num">$15.50</td><td></td></tr>
+      <tr><td class="code">P8</td><td class="name">Seafood</td><td class="vi">Phở Hải Sản</td><td>Shrimp, fish balls, imitation crab, squid.</td><td class="num">$15.50</td><td></td></tr>
+      <tr><td class="code">P9</td><td class="name">Vegetable &amp; Tofu</td><td class="vi">Phở Chay</td><td>Tofu + vegetables. Choice of broth.</td><td class="num">$14.75</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">P10</td><td class="name">Pho Filet Mignon</td><td class="vi">Phở Filet Mignon</td><td>Tender filet mignon in beef broth.</td><td class="num">$17.75</td><td></td></tr>
+      <tr><td class="code">P11</td><td class="name">Chef's — Saté Rare Steak &amp; Shrimp</td><td class="vi">Phở Sa Tế Tái Tôm</td><td>Spicy beef broth, rare steak, shrimp.</td><td class="num">$17.75</td><td><span class="flag flag--spicy">🌶</span></td></tr>
+      <tr><td class="code">P12</td><td class="name">Chef's — Garlic Wok-seared Filet</td><td class="vi">Phở Filet Mignon Xào Tỏi</td><td>Wok-seared filet mignon with garlic.</td><td class="num">$19.50</td><td><span class="flag flag--star">★</span></td></tr>
+      <tr><td class="code">P13</td><td class="name">Chef's — Beef Ribs</td><td class="vi">Phở Sườn Bò</td><td>Slow-cooked beef ribs on the bone.</td><td class="num">$19.50</td><td></td></tr>
+      <tr><td class="code">P14</td><td class="name">Meatballs</td><td class="vi">Phở Bò Viên</td><td>Beef meatballs in broth.</td><td class="num">$14.75</td><td></td></tr>
+      <tr><td class="code">P15</td><td class="name">Pho No Meat</td><td class="vi">—</td><td>Meatless phở. Choice of broth.</td><td class="num">$13.75</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">P16</td><td class="name">Pho Tendon</td><td class="vi">Phở Gân</td><td>Beef tendon — soft, gelatinous.</td><td class="num">$16.50</td><td></td></tr>
+      <tr><td class="code">P17</td><td class="name">Pho Tendon &amp; Tripe</td><td class="vi">Phở Gân Sách</td><td>Traditional cuts in savory broth.</td><td class="num">$17.50</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- RICE PLATES -->
+  <div class="cat-header">
+    <h2>Rice Plates &nbsp;<em>· Cơm Dĩa</em><span class="cat-count">(20 items · R14, R16–R18 missing)</span></h2>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">R1</td><td class="name">BBQ Pork</td><td class="vi">Sườn Nướng</td><td>Grilled BBQ pork. Lettuce, cucumber, daikon, tomato. Fish sauce.</td><td class="num">$14.75</td><td></td></tr>
+      <tr><td class="code">R2</td><td class="name">BBQ Chicken</td><td class="vi">Gà Nướng</td><td>Grilled BBQ chicken with sides as above.</td><td class="num">$14.75</td><td></td></tr>
+      <tr><td class="code">R3</td><td class="name">BBQ Beef</td><td class="vi">Bò Nướng</td><td>Grilled BBQ beef with sides as above.</td><td class="num">$16.50</td><td></td></tr>
+      <tr><td class="code">R4</td><td class="name">Stir-fried Beef &amp; Veg</td><td class="vi">Cơm Bò Xào</td><td>Tender beef + mixed vegetables over rice.</td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R5</td><td class="name">Stir-fried Chicken &amp; Veg</td><td class="vi">Cơm Gà Xào</td><td>Juicy chicken + mixed vegetables.</td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R6</td><td class="name">Stir-fried Shrimp &amp; Veg</td><td class="vi">Cơm Tôm Xào</td><td>Shrimp + mixed vegetables.</td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R7</td><td class="name">Stir-fried Seafood &amp; Veg</td><td class="vi">Cơm Hải Sản Xào</td><td>Mixed seafood + vegetables.</td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R8</td><td class="name">Stir-fried Tofu &amp; Veg</td><td class="vi">Cơm Đậu Hủ Xào</td><td>Tofu + mixed vegetables.</td><td class="num">$15.25</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">R9</td><td class="name">Spicy Lemongrass Chicken</td><td class="vi">Cơm Gà Xào Sả Ớt</td><td>Lemongrass + chili.</td><td class="num">$15.25</td><td><span class="flag flag--spicy">🌶</span></td></tr>
+      <tr><td class="code">R10</td><td class="name">Spicy Lemongrass Beef</td><td class="vi">Cơm Bò Xào Sả Ớt</td><td>Lemongrass + chili. Fresh veg.</td><td class="num">$15.75</td><td><span class="flag flag--spicy">🌶</span></td></tr>
+      <tr><td class="code">R11</td><td class="name">Stir-fried Curry Chicken</td><td class="vi">Cơm Gà Cà Ri</td><td>Mild curry sauce + vegetables.</td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R12</td><td class="name">Stir-fried Curry Beef</td><td class="vi">Cơm Bò Cà Ri</td><td>Mild curry sauce + vegetables.</td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R13</td><td class="name">Orange Chicken</td><td class="vi">—</td><td>Fried chicken in sweet/tangy orange sauce. <em style="color:var(--text-tertiary);">Chinese-American.</em></td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R15</td><td class="name">Grilled Shrimp &amp; Egg Rolls</td><td class="vi">Cơm Tôm Nướng Chả Giò</td><td>Grilled shrimp + crispy egg rolls over rice + veg.</td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">R19</td><td class="name">Orange Tofu</td><td class="vi">—</td><td>Fried tofu in orange sauce. <em style="color:var(--text-tertiary);">Chinese-American.</em></td><td class="num">$15.25</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">R20</td><td class="name">Sesame Chicken</td><td class="vi">—</td><td>Sweet sesame glaze. <em style="color:var(--text-tertiary);">Chinese-American.</em></td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R21</td><td class="name">General Tso Chicken</td><td class="vi">—</td><td>Savory sauce, fried chicken. <em style="color:var(--text-tertiary);">Chinese-American.</em></td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R22</td><td class="name">Beef Teriyaki</td><td class="vi">—</td><td>Teriyaki glaze + vegetables. <em style="color:var(--text-tertiary);">Japanese.</em></td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">R23</td><td class="name">Chicken Teriyaki</td><td class="vi">—</td><td>Teriyaki glaze + vegetables. <em style="color:var(--text-tertiary);">Japanese.</em></td><td class="num">$15.25</td><td></td></tr>
+      <tr><td class="code">R24</td><td class="name">Chef's — Shaking Beef</td><td class="vi">Bò Lúc Lắc</td><td>Filet mignon shaken in hot skillet with garlic, butter, pepper. Sizzling plate, watercress, rice.</td><td class="num">$18.25</td><td><span class="flag flag--star">★</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- FRIED RICE -->
+  <div class="cat-header">
+    <h2>Fried Rice &nbsp;<em>· Cơm Chiên</em><span class="cat-count">(8 items)</span></h2>
+    <p class="cat-intro">Wok-fried jasmine rice with egg.</p>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">F1</td><td class="name">Beef</td><td class="vi">Cơm Chiên Bò</td><td>—</td><td class="num">$15.99</td><td></td></tr>
+      <tr><td class="code">F2</td><td class="name">Chicken</td><td class="vi">Cơm Chiên Gà</td><td>—</td><td class="num">$15.50</td><td></td></tr>
+      <tr><td class="code">F3</td><td class="name">Shrimp</td><td class="vi">Cơm Chiên Tôm</td><td>—</td><td class="num">$16.25</td><td></td></tr>
+      <tr><td class="code">F4</td><td class="name">Special Combo</td><td class="vi">Cơm Chiên Thập Cẩm</td><td>Beef, chicken, shrimp.</td><td class="num">$16.75</td><td></td></tr>
+      <tr><td class="code">F5</td><td class="name">Seafood</td><td class="vi">Cơm Chiên Hải Sản</td><td>Mixed seafood.</td><td class="num">$16.25</td><td></td></tr>
+      <tr><td class="code">F6</td><td class="name">Char Siu Pork</td><td class="vi">Cơm Chiên Xá Xíu</td><td>Cantonese-style sweet BBQ pork.</td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">F7</td><td class="name">Yáng Châu</td><td class="vi">Cơm Chiên Dương Châu</td><td>Classic Yang Chow — char siu, shrimp, scallion, egg.</td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">F8</td><td class="name">Vegetable</td><td class="vi">Cơm Chiên Chay</td><td>Mixed vegetables.</td><td class="num">$15.75</td><td><span class="flag flag--veg">VEG</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- EGG NOODLES -->
+  <div class="cat-header">
+    <h2>Stir-fried Egg Noodles &nbsp;<em>· Mì Xào</em><span class="cat-count">(8 items)</span></h2>
+    <p class="cat-intro">Stir-fried noodles with broccoli, onions, carrots, chef's secret sauce.</p>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">N1</td><td class="name">Beef</td><td class="vi">Mì Xào Bò</td><td>—</td><td class="num">$15.99</td><td></td></tr>
+      <tr><td class="code">N2</td><td class="name">Chicken</td><td class="vi">Mì Xào Gà</td><td>—</td><td class="num">$15.00</td><td></td></tr>
+      <tr><td class="code">N3</td><td class="name">Shrimp</td><td class="vi">Mì Xào Tôm</td><td>—</td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">N4</td><td class="name">Seafood</td><td class="vi">Mì Xào Hải Sản</td><td>—</td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">N5</td><td class="name">Vegetables &amp; Tofu</td><td class="vi">Mì Xào Chay</td><td>—</td><td class="num">$14.75</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">N6</td><td class="name">Meat &amp; Seafood</td><td class="vi">Mì Xào Thập Cẩm</td><td>Combination.</td><td class="num">$16.75</td><td></td></tr>
+      <tr><td class="code">N7</td><td class="name">Garlic Noodles w/ Shaking Filet Mignon</td><td class="vi">Mì Xào Tỏi Bò Lúc Lắc</td><td>Buttery garlic noodles + shaking filet. The signature.</td><td class="num">$19.50</td><td><span class="flag flag--star">★</span></td></tr>
+      <tr><td class="code">N8</td><td class="name">Garlic Noodles w/ Grilled Shrimp</td><td class="vi">Mì Xào Tỏi Tôm</td><td>Signature garlic noodle base + grilled shrimp.</td><td class="num">$17.50</td><td><span class="flag flag--star">★</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- VERMICELLI -->
+  <div class="cat-header">
+    <h2>Vermicelli Bowls &nbsp;<em>· Bún</em><span class="cat-count">(11 items)</span></h2>
+    <p class="cat-intro">Cool rice vermicelli, herbs, vegetables, peanuts. Fish sauce on side.</p>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">V1</td><td class="name">BBQ Pork</td><td class="vi">Bún Thịt Nướng</td><td>—</td><td class="num">$15.00</td><td></td></tr>
+      <tr><td class="code">V2</td><td class="name">BBQ Chicken</td><td class="vi">Bún Gà Nướng</td><td>—</td><td class="num">$15.00</td><td></td></tr>
+      <tr><td class="code">V3</td><td class="name">BBQ Beef</td><td class="vi">Bún Bò Nướng</td><td>—</td><td class="num">$16.00</td><td></td></tr>
+      <tr><td class="code">V4</td><td class="name">BBQ Shrimp</td><td class="vi">Bún Tôm Nướng</td><td>—</td><td class="num">$15.75</td><td></td></tr>
+      <tr><td class="code">V5</td><td class="name">Crispy Fried Tofu</td><td class="vi">Bún Đậu Hủ Chiên</td><td>—</td><td class="num">$15.00</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">V6</td><td class="name">BBQ Pork &amp; Egg Rolls</td><td class="vi">Bún Thịt Nướng Chả Giò</td><td>With two crispy egg rolls on top.</td><td class="num">$16.00</td><td></td></tr>
+      <tr><td class="code">V7</td><td class="name">BBQ Chicken &amp; Egg Rolls</td><td class="vi">Bún Gà Nướng Chả Giò</td><td>With egg rolls.</td><td class="num">$16.00</td><td></td></tr>
+      <tr><td class="code">V8</td><td class="name">BBQ Beef &amp; Egg Rolls</td><td class="vi">Bún Bò Nướng Chả Giò</td><td>With egg rolls.</td><td class="num">$16.50</td><td></td></tr>
+      <tr><td class="code">V9</td><td class="name">BBQ Shrimp &amp; Egg Rolls</td><td class="vi">Bún Tôm Nướng Chả Giò</td><td>With egg rolls.</td><td class="num">$16.50</td><td></td></tr>
+      <tr><td class="code">V10</td><td class="name">Lemongrass Beef</td><td class="vi">Bún Bò Xào Sả</td><td>Hot lemongrass beef over cool noodles. Signature.</td><td class="num">$16.75</td><td><span class="flag flag--star">★</span></td></tr>
+      <tr><td class="code">V11</td><td class="name">Lemongrass Chicken</td><td class="vi">Bún Gà Xào Sả</td><td>Lemongrass marinade.</td><td class="num">$16.00</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- SUSHI -->
+  <div class="cat-header">
+    <h2>Sushi <span class="cat-count">(8 items · rolls are 8 pcs)</span></h2>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">S1</td><td class="name">Caterpillar Roll</td><td>Eel, cucumber, cream cheese, imitation crab. Avocado top, eel sauce.</td><td class="num">$13.50</td><td></td></tr>
+      <tr><td class="code">S2</td><td class="name">Cucumber Roll</td><td>Cucumber, avocado, cream cheese, nori.</td><td class="num">$10.99</td><td><span class="flag flag--veg">VEG</span></td></tr>
+      <tr><td class="code">S3</td><td class="name">California Roll</td><td>Imitation crab, avocado, cucumber, cream cheese.</td><td class="num">$11.99</td><td></td></tr>
+      <tr><td class="code">S4</td><td class="name">Poke Bowl</td><td>Tuna, avocado, cream cheese, seaweed salad, cucumber, sesame.</td><td class="num">$13.99</td><td></td></tr>
+      <tr><td class="code">S5</td><td class="name">Shrimp Tempura Roll</td><td>Tempura shrimp, avocado, cream cheese, cucumber, eel sauce.</td><td class="num">$11.99</td><td></td></tr>
+      <tr><td class="code">S6</td><td class="name">Tuna Roll</td><td>Fresh tuna, cream cheese, avocado, cucumber.</td><td class="num">$11.50</td><td></td></tr>
+      <tr><td class="code">S7</td><td class="name">Spicy Tuna Roll</td><td>Chopped tuna with mild spicy sauce, sesame and nori.</td><td class="num">$11.50</td><td><span class="flag flag--spicy">🌶</span></td></tr>
+      <tr><td class="code">S8</td><td class="name">Eel Roll</td><td>Grilled eel, imitation crab, cream cheese, cucumber, eel sauce.</td><td class="num">$12.99</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- BEVERAGES -->
+  <div class="cat-header">
+    <h2>Beverages &nbsp;<em>· Đồ Uống</em><span class="cat-count">(16 items)</span></h2>
+  </div>
+  <table>
+    <thead><tr><th>Code</th><th>Name</th><th>Vietnamese</th><th>Description</th><th class="num">Price</th><th>Flags</th></tr></thead>
+    <tbody>
+      <tr><td class="code">D1</td><td class="name">Strawberry Basil Green Tea</td><td class="vi">—</td><td>House blend with fresh strawberry &amp; basil.</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D2</td><td class="name">Vietnamese Coffee w/ Condensed Milk</td><td class="vi">Cà Phê Sữa</td><td>Dark-roast Vietnamese coffee + condensed milk. Iced or hot.</td><td class="num">$5.50</td><td><span class="flag flag--star">★</span></td></tr>
+      <tr><td class="code">D3</td><td class="name">Jasmine Green Tea</td><td class="vi">Trà Lài</td><td>Iced or hot.</td><td class="num">$3.99</td><td></td></tr>
+      <tr><td class="code">D4</td><td class="name">Fresh Lemonade</td><td class="vi">Nước Chanh</td><td>House-made.</td><td class="num">$4.50</td><td></td></tr>
+      <tr><td class="code">D5</td><td class="name">Lemonade + Tea</td><td class="vi">Nước Chanh Trà</td><td>Lemonade blended with iced tea.</td><td class="num">$4.50</td><td></td></tr>
+      <tr><td class="code">D6</td><td class="name">Lemonade + Club Soda</td><td class="vi">Nước Chanh Soda</td><td>Sparkling lemonade.</td><td class="num">$4.50</td><td></td></tr>
+      <tr><td class="code">D7</td><td class="name">Lemonade + Strawberry</td><td class="vi">Nước Chanh Dâu</td><td>House lemonade with strawberry.</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D8</td><td class="name">Strawberry Peach Green Tea</td><td class="vi">—</td><td>—</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D9</td><td class="name">Thai Iced Tea</td><td class="vi">Trà Thái Đá</td><td>Classic sweet condensed-milk Thai tea.</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D10</td><td class="name">Milk Tea</td><td class="vi">Trà Sữa</td><td>Classic milk tea.</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D11</td><td class="name">Taro Milk Tea</td><td class="vi">Trà Sữa Khoai Môn</td><td>Milk tea with taro.</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D12</td><td class="name">Mango Green Tea</td><td class="vi">—</td><td>Green tea with fresh mango.</td><td class="num">$4.99</td><td></td></tr>
+      <tr><td class="code">D13</td><td class="name">Canned Soda</td><td class="vi">—</td><td>Pepsi · Coke · Diet · 7-Up · Sprite · Fanta</td><td class="num">$2.50</td><td></td></tr>
+      <tr><td class="code">D14</td><td class="name">Fruit Smoothie</td><td class="vi">Sinh Tố Trái Cây</td><td>Mango, taro, or strawberry.</td><td class="num">$6.50</td><td></td></tr>
+      <tr><td class="code">D15</td><td class="name">Avocado Smoothie</td><td class="vi">Sinh Tố Bơ</td><td>Creamy avocado smoothie.</td><td class="num">$6.50</td><td></td></tr>
+      <tr><td class="code">D16</td><td class="name">Fresh Coconut</td><td class="vi">Dừa Tươi</td><td>Fresh young coconut, chilled.</td><td class="num">$6.99</td><td></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px; color:var(--text-tertiary); margin:-8px 0 0; font-style:italic;">No refills on drinks · Add boba +$0.50</p>
+
+  <!-- ALCOHOL -->
+  <div class="cat-header">
+    <h2>Alcohol <span class="cat-count">(beer · wine · sake)</span></h2>
+  </div>
+  <table>
+    <thead><tr><th>Item</th><th>Varieties</th><th class="num">Glass</th><th class="num">Bottle</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Beer</td><td>Sapporo · Corona · Modelo · Tsingtao</td><td class="num">$5.50</td><td class="num">—</td></tr>
+      <tr><td class="name">Sake</td><td>House sake</td><td class="num">$9.99</td><td class="num">—</td></tr>
+      <tr><td class="name">Red Wine</td><td>Cabernet · Pinot Noir · Merlot · Malbec</td><td class="num">$9.99</td><td class="num">$28.99</td></tr>
+      <tr><td class="name">White Wine</td><td>Chardonnay · Sauv Blanc · Pinot Grigio · Prosecco · Rosé · Sparkling</td><td class="num">$9.99</td><td class="num">$27.99</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EXTRAS -->
+  <div class="cat-header">
+    <h2>Extras &amp; Sides <span class="cat-count">(à la carte add-ons)</span></h2>
+  </div>
+  <table>
+    <thead><tr><th>Item</th><th class="num">Price</th><th>Item</th><th class="num">Price</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Extra protein</td><td class="num">$4.00</td><td class="name">Extra vegetables</td><td class="num">$3.00</td></tr>
+      <tr><td class="name">Add egg</td><td class="num">$2.00</td><td class="name">Extra rice</td><td class="num">$2.00</td></tr>
+      <tr><td class="name">Extra noodles</td><td class="num">$2.00</td><td class="name">Extra garnish</td><td class="num">$2.00</td></tr>
+      <tr><td class="name">Extra tofu</td><td class="num">$2.00</td><td class="name">Extra egg (Bánh Mì)</td><td class="num">$2.00</td></tr>
+      <tr><td class="name">Extra shrimp</td><td class="num">$4.00</td><td class="name">Extra pork</td><td class="num">$4.00</td></tr>
+      <tr><td class="name">Extra chicken</td><td class="num">$4.00</td><td class="name">Extra beef</td><td class="num">$4.00</td></tr>
+      <tr><td class="name">Extra filet mignon</td><td class="num">$6.00</td><td class="name">Extra beef ribs <span class="flag flag--pop" style="margin-left:4px;">POP</span></td><td class="num">$10.00</td></tr>
+      <tr><td class="name">Rare steak on the side</td><td class="num">$4.00</td><td class="name">Extra fried rice</td><td class="num">$5.00</td></tr>
+      <tr><td class="name">Side of beef broth</td><td class="num">$4.00</td><td class="name">Side of chicken broth</td><td class="num">$4.00</td></tr>
+      <tr><td class="name">Extra peanut sauce</td><td class="num">$1.00</td><td class="name">Extra fish sauce</td><td class="num">$1.00</td></tr>
+      <tr><td class="name">Extra sweet &amp; sour</td><td class="num">$1.00</td><td class="name">Extra ponzu sauce</td><td class="num">$1.00</td></tr>
+      <tr><td class="name">Extra boba</td><td class="num">$0.50</td><td class="name">To-go box</td><td class="num">$0.50</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="page-footer">
+  <div class="contact">Grandpa Táo Kitchen</div>
+  1190 N 2nd Street · El Cajon, CA 92021 · (619) 442-1211<br>
+  Mon, Tue, Thu – Sun · 11am – 9pm · closed Wednesdays<br><br>
+  <a href="https://grandpa-tao-kitchen.square.site" target="_blank">Order online</a> &nbsp;·&nbsp;
+  <a href="menu-master.csv" target="_blank">Download CSV</a> &nbsp;·&nbsp;
+  <a href="index.html">Project blueprint</a>
+  <div style="margin-top:18px; font-size:10px;">
+    Verified against printed in-store menu and grandpa-tao-kitchen.square.site · May 2026
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ═════════════════════════════════════════════════════
+  // PRICE SUGGESTIONS (from market price analysis)
+  // Source: index.html#pricing
+  // Conservative recommendations only — most items hold.
+  // ═════════════════════════════════════════════════════
+  const PRICE_SUGGESTIONS = {
+    // Bánh Mì — whole category sits below SD market
+    'B1': 10.50, 'B2': 10.50, 'B3': 11.50, 'B4': 11.50,
+    'B5':  9.50, 'B6': 10.50, 'B7': 11.99, 'B8': 10.99,
+    // Phở — selective nudges on chef's tier
+    'P1': 16.99, 'P10': 18.50, 'P12': 19.99, 'P13': 19.99,
+    // Vermicelli — signature + with-egg-rolls
+    'V6': 16.50, 'V10': 17.50,
+    // Egg noodles — N8 shrimp variant
+    'N8': 18.50,
+    // Rice plates — signature only
+    'R24': 19.25,
+    // Sushi — tempura roll only
+    'S5': 12.50
+  };
+
+  // ───── Inject Suggested column into every item table ─────
+  document.querySelectorAll('.container > table').forEach(table => {
+    const headRow = table.querySelector('thead tr');
+    const rows = table.querySelectorAll('tbody tr');
+    if (!headRow || !rows.length) return;
+
+    // Skip tables that don't have a "code" column (alcohol, extras)
+    const firstCodeCell = rows[0].querySelector('td.code');
+    if (!firstCodeCell) return;
+
+    // Insert Suggested header before Flags
+    const flagsHeader = headRow.querySelector('th:last-child');
+    const suggestedHeader = document.createElement('th');
+    suggestedHeader.className = 'num suggested-col';
+    suggestedHeader.textContent = 'Suggested';
+    headRow.insertBefore(suggestedHeader, flagsHeader);
+
+    // Add a Suggested cell to each row
+    rows.forEach(row => {
+      const code = row.querySelector('td.code').textContent.trim();
+      const priceCell = row.querySelector('td.num');
+      const currentPrice = parseFloat(priceCell.textContent.replace(/[^0-9.]/g, ''));
+
+      const cell = document.createElement('td');
+      cell.className = 'num suggested-col';
+
+      if (PRICE_SUGGESTIONS[code] !== undefined) {
+        const suggested = PRICE_SUGGESTIONS[code];
+        const delta = (suggested - currentPrice).toFixed(2);
+        cell.classList.add('suggested--up');
+        cell.innerHTML = '$' + suggested.toFixed(2) +
+                         ' <span class="delta">(+$' + delta + ')</span>';
+      } else {
+        cell.classList.add('suggested--hold');
+        cell.innerHTML = '—';
+      }
+
+      const flagsCell = row.querySelector('td:last-child');
+      row.insertBefore(cell, flagsCell);
+    });
+  });
+
+  // ───── Discover category sections ─────
+  // Each "section" is a cat-header followed by its table (and optional trailing notes).
+  const sections = [];
+  document.querySelectorAll('.cat-header').forEach(header => {
+    const titleEl = header.querySelector('h2');
+    if (!titleEl) return;
+    // Get short category name (text before any em, span, or punctuation)
+    const fullTitle = titleEl.textContent;
+    const shortName = fullTitle.split('·')[0].split('(')[0].trim();
+    const slug = shortName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+    // Gather sibling elements that belong to this section (up to next cat-header)
+    const siblings = [];
+    let table = null;
+    let node = header.nextElementSibling;
+    while (node && !node.classList.contains('cat-header')) {
+      siblings.push(node);
+      if (node.tagName === 'TABLE' && !table) table = node;
+      node = node.nextElementSibling;
+    }
+    if (!table) return;
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    sections.push({ header, table, siblings, rows, slug, name: shortName });
+  });
+
+  // ───── Build category pills ─────
+  const pillsRoot = document.getElementById('categoryPills');
+  sections.forEach(sec => {
+    const btn = document.createElement('button');
+    btn.className = 'pill';
+    btn.dataset.category = sec.slug;
+    btn.innerHTML = sec.name + ' <span class="pill__count">' + sec.rows.length + '</span>';
+    pillsRoot.appendChild(btn);
+  });
+
+  // ───── State ─────
+  let activeCategory = '__all__';
+  let activeTag = null;
+  let searchQuery = '';
+
+  const searchInput = document.getElementById('searchInput');
+  const searchWrap  = document.getElementById('filterSearch');
+  const clearBtn    = document.getElementById('clearSearch');
+  const emptyState  = document.getElementById('emptyState');
+  const statusBar   = document.getElementById('filterStatus');
+  const visibleCountEl = document.getElementById('visibleCount');
+  const totalCountEl   = document.getElementById('totalCount');
+  const resetLink   = document.getElementById('resetFilters');
+  const totalRows = sections.reduce((sum, s) => sum + s.rows.length, 0);
+  totalCountEl.textContent = totalRows;
+
+  // ───── Tag detection (reads the row's flag cell classes) ─────
+  function rowHasTag(row, tag) {
+    const html = row.innerHTML;
+    if (tag === 'signature') return html.includes('flag--star');
+    if (tag === 'spicy')     return html.includes('flag--spicy');
+    if (tag === 'veg')       return html.includes('flag--veg');
+    if (tag === 'popular')   return html.includes('flag--pop') || html.includes('>POP<');
+    return true;
+  }
+
+  function rowSearchText(row) {
+    if (!row._searchText) {
+      row._searchText = row.textContent.toLowerCase();
+    }
+    return row._searchText;
+  }
+
+  // ───── Apply filters ─────
+  function applyFilters() {
+    let visible = 0;
+    const q = searchQuery.trim().toLowerCase();
+    const anyFilter = !!q || activeCategory !== '__all__' || activeTag !== null;
+
+    sections.forEach(sec => {
+      const inCategory = activeCategory === '__all__' || sec.slug === activeCategory;
+      let sectionVisible = 0;
+
+      sec.rows.forEach(row => {
+        let show = inCategory;
+        if (show && activeTag) show = rowHasTag(row, activeTag);
+        if (show && q)         show = rowSearchText(row).includes(q);
+
+        row.classList.toggle('hidden', !show);
+        if (show) { sectionVisible++; visible++; }
+      });
+
+      // Hide entire category section (header + table + siblings) when nothing visible
+      const hideSection = sectionVisible === 0;
+      sec.header.classList.toggle('hidden', hideSection);
+      sec.siblings.forEach(el => el.classList.toggle('hidden', hideSection));
+    });
+
+    visibleCountEl.textContent = visible;
+    emptyState.classList.toggle('visible', visible === 0);
+    statusBar.classList.toggle('visible', anyFilter);
+    searchWrap.classList.toggle('has-value', q.length > 0);
+  }
+
+  // ───── Wire up events ─────
+  searchInput.addEventListener('input', e => {
+    searchQuery = e.target.value;
+    applyFilters();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    searchQuery = '';
+    searchInput.focus();
+    applyFilters();
+  });
+
+  pillsRoot.addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    activeCategory = pill.dataset.category;
+    pillsRoot.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    applyFilters();
+  });
+
+  document.querySelectorAll('.pill--tag').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const tag = pill.dataset.tag;
+      if (activeTag === tag) {
+        activeTag = null;
+        pill.classList.remove('active');
+      } else {
+        document.querySelectorAll('.pill--tag').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeTag = tag;
+      }
+      applyFilters();
+    });
+  });
+
+  resetLink.addEventListener('click', () => {
+    searchInput.value = '';
+    searchQuery = '';
+    activeCategory = '__all__';
+    activeTag = null;
+    pillsRoot.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pillsRoot.querySelector('[data-category="__all__"]').classList.add('active');
+    document.querySelectorAll('.pill--tag').forEach(p => p.classList.remove('active'));
+    applyFilters();
+  });
+
+  // Keyboard shortcut: / focuses search
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== searchInput && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+    if (e.key === 'Escape' && document.activeElement === searchInput) {
+      searchInput.value = '';
+      searchQuery = '';
+      applyFilters();
+      searchInput.blur();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  Grandpa Tao's Kitchen — Print-Ready Menu v1.0                  ║
+  ║  16 pages, 8.5" × 11", letter size                              ║
+  ║                                                                  ║
+  ║  To export to PDF:                                              ║
+  ║    1. Open this file in Chrome                                  ║
+  ║    2. Cmd+P → Destination: Save as PDF                          ║
+  ║    3. Margins: None • Background graphics: ON                   ║
+  ║                                                                  ║
+  ║  Data source: menu-master.csv                                   ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grandpa Táo Kitchen — Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:      #f5f0e8;
+    --cream-2:    #ede6d8;
+    --charcoal:   #1a1a1a;
+    --charcoal-2: #2a2421;
+    --terracotta: #8b3a2a;     /* canonical cover color, matches hero mockup */
+    --terracotta-2:#6f2d20;
+    --gold:       #d4af37;
+    --gold-soft:  #b8932e;
+    --sage:       #7a9b8e;
+    --ink:        #2a201a;
+    --ink-soft:   #5b4a3e;
+    --rule:       #b9a98f;
+  }
+
+  /* ───── Print setup ──────────────────────────────────── */
+  @page {
+    size: 8.5in 11in;
+    margin: 0;
+  }
+  @media print {
+    html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; }
+    .page { box-shadow: none !important; margin: 0 !important; }
+    .no-print { display: none !important; }
+  }
+
+  /* ───── Screen viewing chrome ────────────────────────── */
+  html, body {
+    margin: 0; padding: 0;
+    background: #3a3a3a;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .screen-banner {
+    position: sticky; top: 0; z-index: 100;
+    background: #111; color: #eee;
+    padding: 10px 16px;
+    font: 500 12px/1.4 'Inter', sans-serif;
+    border-bottom: 1px solid #000;
+    text-align: center;
+  }
+  .screen-banner kbd {
+    background: #333; padding: 1px 6px; border-radius: 3px;
+    font-family: 'SF Mono', monospace; font-size: 11px;
+  }
+
+  /* ───── Page primitive ───────────────────────────────── */
+  .page {
+    width: 8.5in;
+    height: 11in;
+    margin: 24px auto;
+    background: var(--cream);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    color: var(--ink);
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .page--dark      { background: var(--charcoal); color: #ede6d8; }
+  .page--cream-dk  { background: var(--cream-2); }
+  .page--terracotta{ background: var(--terracotta); color: var(--cream); }
+
+  .page__inner {
+    position: absolute;
+    inset: 0.75in;            /* 0.75" all-around margin */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-num {
+    position: absolute;
+    bottom: 0.35in;
+    left: 0; right: 0;
+    text-align: center;
+    font: 400 9px/1 'Inter', sans-serif;
+    letter-spacing: 2px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+  .page--dark .page-num,
+  .page--terracotta .page-num { color: rgba(255,255,255,0.4); }
+
+  /* ───── Type system ──────────────────────────────────── */
+  .h-display {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+  }
+  .h-script {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .eyebrow {
+    font: 600 10px/1 'Inter', sans-serif;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+  }
+
+  /* ───── Section divider header (centered stack) ───── */
+  .section-head {
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    text-align: center;
+    position: relative;
+  }
+  .section-head::after {
+    content: ""; display: block;
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 12px auto 0;
+  }
+  .section-head .eyebrow { display: block; margin-bottom: 6px; }
+  .section-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: 0.5px;
+  }
+  .section-head .vi {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    display: block;
+  }
+  .page--dark .section-head h2 { color: var(--cream); }
+  .page--dark .section-head .vi { color: rgba(245,240,232,0.7); }
+  .page--dark .section-head .eyebrow { color: var(--gold); }
+  .page--dark .section-head::after { background: var(--gold); }
+
+  /* ───── Item layout ──────────────────────────────────── */
+  .items { flex: 1; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    padding: 11px 0;
+    align-items: baseline;
+    border-bottom: 1px dotted rgba(91,74,62,0.18);
+  }
+  .item:last-child { border-bottom: none; }
+
+  .item__name {
+    font: 600 13px/1.3 'Inter', sans-serif;
+    color: var(--ink);
+    letter-spacing: 0.2px;
+  }
+  .item__name .vi {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-left: 4px;
+  }
+  .item__price {
+    font: 500 13px/1 'Inter', sans-serif;
+    color: var(--ink);
+    font-feature-settings: "tnum";
+    white-space: nowrap;
+  }
+  .item__desc {
+    grid-column: 1 / -1;
+    font: 400 11px/1.55 'Inter', sans-serif;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .item__flags { display: inline-flex; gap: 4px; margin-left: 6px; }
+  .flag {
+    display: inline-block;
+    font: 600 8px/1.6 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+  .flag--star { background: var(--gold); color: var(--charcoal); }
+  .flag--spicy{ background: #b94c2e; color: #fff; }
+  .flag--veg  { background: var(--sage); color: #fff; }
+
+  /* Dark page overrides */
+  .page--dark .item { border-bottom-color: rgba(212,175,55,0.18); }
+  .page--dark .item__name { color: var(--cream); }
+  .page--dark .item__price { color: var(--gold); }
+  .page--dark .item__desc { color: rgba(237,230,216,0.65); }
+  .page--dark .item__name .vi { color: rgba(237,230,216,0.65); }
+
+  /* ───── Two-column layout (where category fits side-by-side) ─ */
+  .cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 36px;
+  }
+
+  /* ───── Featured / hero block ────────────────────────── */
+  .feature {
+    background: var(--cream-2);
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    margin: 12px 0 24px;
+    border-radius: 0 4px 4px 0;
+  }
+  .feature .eyebrow { color: var(--gold-soft); margin-bottom: 4px; display: block; }
+  .feature .feature__name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .feature .feature__name .price {
+    float: right; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500;
+  }
+  .feature .feature__desc {
+    font: 400 11px/1.55 'Inter', sans-serif;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .page--dark .feature {
+    background: rgba(212,175,55,0.06);
+    border-color: var(--gold);
+  }
+  .page--dark .feature .feature__name { color: var(--cream); }
+  .page--dark .feature .feature__desc { color: rgba(237,230,216,0.7); }
+
+  /* ───── Cover page ──────────────────────────────────── */
+  .cover {
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(212,175,55,0.10), transparent 60%),
+      var(--terracotta);
+    color: var(--cream);
+    position: relative;
+  }
+  .cover__inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1in 1in 1.25in;
+    text-align: center;
+  }
+  .cover__icon {
+    width: 1.6in; height: 1.6in;
+    margin-bottom: 0.3in;
+    color: var(--gold);
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,0.2));
+  }
+  .cover__brand {
+    font: 400 14px/1 'Inter', sans-serif;
+    letter-spacing: 8px;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .cover__title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 0.9;
+    color: var(--gold);
+    letter-spacing: -2px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    margin: 0;
+  }
+  .cover__title-script {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: 64px;
+    color: var(--gold);
+    margin-top: -10px;
+  }
+  .cover__rule {
+    display: flex; align-items: center; gap: 14px;
+    margin: 28px 0 22px;
+    color: var(--gold);
+  }
+  .cover__rule::before, .cover__rule::after {
+    content: ""; height: 1px; background: var(--gold); width: 60px; opacity: 0.7;
+  }
+  .cover__tagline {
+    font: 500 12px/1 'Inter', sans-serif;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .cover__seal {
+    margin-top: 36px;
+    width: 0.55in; height: 0.55in;
+    color: rgba(212,175,55,0.85);
+  }
+  .cover__est {
+    position: absolute; bottom: 0.9in;
+    font: 500 10px/1 'Inter', sans-serif;
+    letter-spacing: 4px;
+    color: rgba(212,175,55,0.85);
+    text-transform: uppercase;
+  }
+  /* faint scene illustration on right edge of cover */
+  .cover__scene {
+    position: absolute; right: 0; bottom: 0;
+    width: 3in; height: 6in;
+    opacity: 0.35;
+    color: var(--terracotta-2);
+  }
+
+  /* ───── Welcome story page ──────────────────────────── */
+  .welcome {
+    text-align: center;
+    padding: 1in 0.9in;
+  }
+  .welcome .eyebrow { display: block; margin-bottom: 16px; }
+  .welcome h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1.05;
+    margin: 0 0 8px;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+  .welcome .h-script {
+    font-size: 30px; display: block; margin-bottom: 30px;
+    color: var(--terracotta);
+  }
+  .welcome .lead {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+  }
+  .welcome p {
+    font: 400 13px/1.75 'Inter', sans-serif;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+  .welcome .signoff {
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    color: var(--terracotta);
+    margin-top: 24px;
+  }
+
+  /* ───── Welcome hero page (dark, full bleed-ish) ───── */
+  .hero-page {
+    background: var(--charcoal);
+    color: var(--cream);
+    display: flex; align-items: flex-end;
+    padding: 0;
+    position: relative;
+  }
+  .hero-page__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(212,175,55,0.12), transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(139,58,42,0.35), transparent 70%),
+      var(--charcoal);
+  }
+  .hero-page__overlay {
+    position: relative; z-index: 2;
+    padding: 1in;
+    width: 100%;
+  }
+  .hero-page__overlay .eyebrow { color: var(--gold); display: block; margin-bottom: 12px; }
+  .hero-page__overlay h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -1px;
+    margin: 0 0 16px;
+  }
+  .hero-page__overlay .h-script {
+    display: block; font-size: 36px; color: var(--gold); margin-bottom: 18px;
+  }
+  .hero-page__overlay p {
+    max-width: 4.5in;
+    font: 400 13px/1.7 'Inter', sans-serif;
+    color: rgba(237,230,216,0.8);
+    margin: 0;
+  }
+
+  /* ───── Closing page ─────────────────────────────────── */
+  .closing {
+    text-align: center;
+    padding: 1.2in 0.8in;
+  }
+  .closing h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--terracotta);
+    margin: 0 0 8px;
+  }
+  .closing .h-script {
+    font-size: 42px; display: block; margin: 8px 0 36px;
+    color: var(--gold-soft);
+  }
+  .closing .ornament {
+    width: 1.6in; margin: 24px auto;
+    color: var(--gold);
+  }
+  .closing .info {
+    margin-top: 36px;
+    font: 400 12px/1.8 'Inter', sans-serif;
+    color: var(--ink-soft);
+  }
+  .closing .info .label {
+    font: 600 9px/1 'Inter', sans-serif;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    display: block; margin-bottom: 4px;
+  }
+  .closing .info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    max-width: 5in; margin: 36px auto 0;
+    text-align: center;
+  }
+  .closing .info-grid > div { padding: 14px 0; }
+
+  /* ───── Decorative elements ──────────────────────────── */
+  .corner-flourish {
+    position: absolute;
+    width: 0.7in; height: 0.7in;
+    color: var(--gold-soft);
+    opacity: 0.45;
+  }
+  .corner-flourish--tl { top: 0.35in; left: 0.35in; }
+  .corner-flourish--br { bottom: 0.35in; right: 0.35in; transform: rotate(180deg); }
+  .page--dark .corner-flourish { color: var(--gold); opacity: 0.35; }
+
+  /* footnote / legend strip */
+  .legend {
+    margin-top: auto;
+    display: flex; gap: 16px; justify-content: flex-end;
+    font: 400 9px/1 'Inter', sans-serif;
+    color: var(--ink-soft);
+    padding-top: 12px;
+    border-top: 1px solid rgba(91,74,62,0.15);
+  }
+  .legend .flag { transform: translateY(-1px); }
+  .page--dark .legend { color: rgba(237,230,216,0.55); border-top-color: rgba(237,230,216,0.15); }
+
+  /* Allergens / footer note  */
+  .footnote {
+    font: 400 9px/1.4 'Inter', sans-serif;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ───── small helpers ───────────────────────────────── */
+  .stretch { flex: 1; }
+  .mb-12 { margin-bottom: 12px; }
+  .mb-24 { margin-bottom: 24px; }
+  .mb-36 { margin-bottom: 36px; }
+
+  /* ════════════════════════════════════════════════════════
+     v2 additions — visual moves borrowed from ChatGPT concept
+     ════════════════════════════════════════════════════════ */
+
+  /* Recurring small brand mark — sits at the top of each section page
+     as a wayfinding device (you always know what menu you're in) */
+  .brand-mark-sm {
+    width: 0.55in; height: 0.55in;
+    margin: 0 auto 12px;
+    color: var(--gold-soft);
+    display: block;
+  }
+  .page--dark .brand-mark-sm { color: var(--gold); }
+  .page--terracotta .brand-mark-sm { color: var(--gold); }
+
+  /* Subtle shophouse scene that runs down the right edge of each
+     interior section page — recurring motif, low contrast so it
+     never competes with the menu content */
+  .shophouse-edge {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 1.6in;
+    pointer-events: none;
+    opacity: 0.18;
+    color: var(--ink);
+  }
+  .shophouse-edge svg { width: 100%; height: 100%; }
+  .page--dark .shophouse-edge { opacity: 0.20; color: var(--gold); }
+  .page--cream-dk .shophouse-edge { opacity: 0.22; }
+
+  /* Dark green "House Favorite" callout — replaces the gold-cream
+     .feature box from v1 with the more dramatic dark-on-gold treatment
+     from the ChatGPT concept */
+  .favorite {
+    background: #1f3a31;
+    color: var(--cream);
+    padding: 14px 18px 16px;
+    margin: 12px 0 20px;
+    position: relative;
+    border: 1px solid #d4af37;
+    border-radius: 2px;
+  }
+  .favorite::before, .favorite::after {
+    content: ""; position: absolute; width: 14px; height: 14px;
+    border: 1px solid var(--gold);
+  }
+  .favorite::before { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+  .favorite::after  { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+  .favorite .eyebrow { color: var(--gold); display: block; margin-bottom: 4px; font-size: 9px; }
+  .favorite__name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--cream);
+    margin: 2px 0;
+  }
+  .favorite__name .vi { font-style: italic; font-weight: 400; color: rgba(245,240,232,0.7); }
+  .favorite__price {
+    float: right;
+    font: 500 16px/1 'Inter', sans-serif;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+  .favorite__desc {
+    clear: both;
+    font: 400 11px/1.55 'Inter', sans-serif;
+    color: rgba(245,240,232,0.85);
+    margin: 6px 0 0;
+  }
+  .favorite__tag {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--gold);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* Small section icons — appear next to subhead labels (Grilled, Stir-fry, etc.) */
+  .section-icon {
+    width: 18px; height: 18px;
+    vertical-align: middle;
+    margin-right: 6px;
+    color: var(--gold-soft);
+  }
+  .subhead {
+    font: 600 11px/1 'Inter', sans-serif;
+    letter-spacing: 2px;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    display: flex; align-items: center;
+  }
+  .subhead-sm {
+    font: 600 11px/1 'Inter', sans-serif;
+    letter-spacing: 2px;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    margin: 22px 0 12px;
+    display: flex; align-items: center;
+  }
+
+  /* Image placeholders — clean, intentional, labeled */
+  .img-ph {
+    background:
+      linear-gradient(135deg, #d8cfbd 25%, transparent 25%, transparent 50%,
+        #d8cfbd 50%, #d8cfbd 75%, transparent 75%) 0 0 / 12px 12px,
+      #e5dccc;
+    border: 1px solid var(--rule);
+    color: #5b4a3e;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 16px;
+    font: italic 400 11px/1.4 'Inter', sans-serif;
+    border-radius: 2px;
+  }
+  .img-ph strong {
+    display: block; font-style: normal; font-weight: 600;
+    color: #1f3a31;
+    letter-spacing: 1.2px; text-transform: uppercase; font-size: 10px;
+    margin-bottom: 4px;
+  }
+  .img-ph small {
+    display: block; font-size: 9px; margin-top: 6px; color: #7a6b5f;
+  }
+  .page--dark .img-ph {
+    background:
+      linear-gradient(135deg, #2a2a2a 25%, transparent 25%, transparent 50%,
+        #2a2a2a 50%, #2a2a2a 75%, transparent 75%) 0 0 / 12px 12px,
+      #1e1e1e;
+    border-color: rgba(212,175,55,0.3);
+    color: rgba(245,240,232,0.6);
+  }
+  .page--dark .img-ph strong { color: var(--gold); }
+
+  /* Hero-spread layout (left photo / right list) used for Vermicelli + Bánh Mì pages */
+  .hero-split {
+    display: grid;
+    grid-template-columns: 3.2in 1fr;
+    gap: 32px;
+    height: 100%;
+  }
+  .hero-split__left { display: flex; flex-direction: column; }
+  .hero-split__left .img-ph { flex: 1; min-height: 4in; }
+  .hero-split__title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+  }
+  .hero-split__sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .hero-split__intro {
+    font: 400 12px/1.6 'Inter', sans-serif;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="screen-banner no-print">
+  <strong>Print preview</strong> — Open in Chrome → <kbd>⌘ P</kbd> → Destination: <em>Save as PDF</em> · Margins: <em>None</em> · Background graphics: <em>ON</em>
+</div>
+
+<!-- Reusable SVG symbols — referenced via <use href="#symbol-id"/> on each page that needs them -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Small brand mark: conical hat bowl + botanical sprig -->
+  <symbol id="brand-mark" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 48 L50 18 L70 48 Z"/>
+    <path d="M30 48 Q50 56 70 48"/>
+    <path d="M22 50 Q50 80 78 50"/>
+    <path d="M22 50 L78 50"/>
+    <path d="M40 12 Q44 8 40 4"/>
+    <path d="M50 10 Q54 6 50 2"/>
+    <path d="M60 12 Q64 8 60 4"/>
+    <path d="M78 32 Q86 28 92 22"/>
+    <ellipse cx="84" cy="26" rx="3" ry="1.5" transform="rotate(-25 84 26)"/>
+    <ellipse cx="89" cy="22" rx="3" ry="1.5" transform="rotate(-30 89 22)"/>
+  </symbol>
+  <!-- Shophouse + street-scene decoration for right edge of each spread -->
+  <symbol id="shophouse" viewBox="0 0 200 800" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round">
+    <!-- top: shophouse facade upper -->
+    <rect x="20" y="120" width="160" height="180"/>
+    <rect x="35" y="140" width="50" height="60"/>
+    <rect x="115" y="140" width="50" height="60"/>
+    <line x1="60" y1="140" x2="60" y2="200"/>
+    <line x1="140" y1="140" x2="140" y2="200"/>
+    <line x1="35" y1="170" x2="85" y2="170"/>
+    <line x1="115" y1="170" x2="165" y2="170"/>
+    <rect x="35" y="220" width="50" height="60"/>
+    <rect x="115" y="220" width="50" height="60"/>
+    <line x1="60" y1="220" x2="60" y2="280"/>
+    <line x1="140" y1="220" x2="140" y2="280"/>
+    <!-- awning / balcony rail -->
+    <line x1="15" y1="305" x2="185" y2="305"/>
+    <line x1="25" y1="295" x2="25" y2="315"/>
+    <line x1="45" y1="295" x2="45" y2="315"/>
+    <line x1="65" y1="295" x2="65" y2="315"/>
+    <line x1="85" y1="295" x2="85" y2="315"/>
+    <line x1="105" y1="295" x2="105" y2="315"/>
+    <line x1="125" y1="295" x2="125" y2="315"/>
+    <line x1="145" y1="295" x2="145" y2="315"/>
+    <line x1="165" y1="295" x2="165" y2="315"/>
+    <!-- middle: ground level shopfront -->
+    <rect x="40" y="370" width="50" height="100"/>
+    <rect x="110" y="370" width="50" height="100"/>
+    <line x1="65" y1="370" x2="65" y2="470"/>
+    <line x1="135" y1="370" x2="135" y2="470"/>
+    <line x1="40" y1="420" x2="90" y2="420"/>
+    <line x1="110" y1="420" x2="160" y2="420"/>
+    <!-- hanging lanterns -->
+    <ellipse cx="55" cy="350" rx="9" ry="12"/>
+    <line x1="55" y1="320" x2="55" y2="338"/>
+    <ellipse cx="100" cy="345" rx="8" ry="11"/>
+    <line x1="100" y1="320" x2="100" y2="334"/>
+    <ellipse cx="145" cy="350" rx="9" ry="12"/>
+    <line x1="145" y1="320" x2="145" y2="338"/>
+    <!-- second-row lanterns -->
+    <ellipse cx="80" cy="510" rx="8" ry="11"/>
+    <line x1="80" y1="485" x2="80" y2="499"/>
+    <ellipse cx="125" cy="515" rx="8" ry="11"/>
+    <line x1="125" y1="485" x2="125" y2="504"/>
+    <!-- street: bicycle -->
+    <circle cx="55" cy="680" r="16"/>
+    <circle cx="125" cy="680" r="16"/>
+    <line x1="55" y1="680" x2="93" y2="645"/>
+    <line x1="125" y1="680" x2="93" y2="645"/>
+    <line x1="87" y1="643" x2="110" y2="630"/>
+    <line x1="55" y1="680" x2="78" y2="648"/>
+    <!-- ground line + small dots -->
+    <line x1="0" y1="710" x2="200" y2="710"/>
+    <circle cx="20" cy="705" r="1.5"/>
+    <circle cx="170" cy="708" r="1.5"/>
+    <circle cx="100" cy="712" r="1"/>
+  </symbol>
+  <!-- Small icons for subheads -->
+  <symbol id="icon-bowl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 11 Q12 18 21 11"/>
+    <path d="M3 11 L21 11"/>
+    <path d="M10 5 Q12 3 10 1"/>
+    <path d="M14 6 Q16 4 14 2"/>
+  </symbol>
+  <symbol id="icon-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22 C7 22 5 18 5 15 C5 12 7 10 9 9 C9 12 11 11 11 8 C11 5 13 3 14 2 C14 6 16 7 17 10 C18 12 19 13 19 16 C19 19 17 22 12 22 Z"/>
+  </symbol>
+  <symbol id="icon-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 20 C4 10 12 4 20 4 C20 12 14 20 4 20 Z"/>
+    <path d="M4 20 L14 10"/>
+  </symbol>
+  <symbol id="icon-baguette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-25 12 12)"/>
+    <line x1="6" y1="13" x2="8" y2="11"/>
+    <line x1="9" y1="14" x2="11" y2="12"/>
+    <line x1="12" y1="15" x2="14" y2="13"/>
+    <line x1="15" y1="16" x2="17" y2="14"/>
+  </symbol>
+  <symbol id="icon-cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9 L6 18 Q6 21 9 21 L15 21 Q18 21 18 18 L18 9 Z"/>
+    <path d="M18 11 L20 11 Q22 11 22 13 L22 15 Q22 17 20 17 L18 17"/>
+    <path d="M10 4 Q12 6 10 8"/>
+    <path d="M14 4 Q16 6 14 8"/>
+  </symbol>
+  <symbol id="icon-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12 C5 8 9 6 14 6 C18 6 20 8 21 12 C20 16 18 18 14 18 C9 18 5 16 3 12 Z"/>
+    <path d="M21 12 L24 8 L24 16 Z"/>
+    <circle cx="16" cy="11" r="0.8" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-pepper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 20 Q4 14 8 11 Q12 8 17 9 Q15 14 13 17 Q10 20 6 20 Z"/>
+    <path d="M17 9 L19 5"/>
+    <path d="M17 9 L20 7"/>
+  </symbol>
+</svg>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 1 — COVER
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <!-- decorative line-art scene on right edge -->
+  <svg class="cover__scene" viewBox="0 0 200 400" fill="none" stroke="currentColor" stroke-width="0.8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- shophouse facade -->
+    <rect x="20" y="40" width="160" height="320" />
+    <rect x="35" y="60" width="50" height="60" />
+    <rect x="115" y="60" width="50" height="60" />
+    <line x1="60" y1="60" x2="60" y2="120"/>
+    <line x1="140" y1="60" x2="140" y2="120"/>
+    <line x1="35" y1="90" x2="85" y2="90"/>
+    <line x1="115" y1="90" x2="165" y2="90"/>
+    <rect x="35" y="140" width="50" height="60" />
+    <rect x="115" y="140" width="50" height="60" />
+    <rect x="80" y="240" width="40" height="100" />
+    <line x1="100" y1="240" x2="100" y2="340"/>
+    <rect x="40" y="220" width="50" height="20" />
+    <rect x="110" y="220" width="50" height="20" />
+    <!-- balcony rail -->
+    <line x1="20" y1="125" x2="180" y2="125"/>
+    <line x1="30" y1="120" x2="30" y2="135"/>
+    <line x1="45" y1="120" x2="45" y2="135"/>
+    <line x1="60" y1="120" x2="60" y2="135"/>
+    <line x1="75" y1="120" x2="75" y2="135"/>
+    <line x1="90" y1="120" x2="90" y2="135"/>
+    <line x1="105" y1="120" x2="105" y2="135"/>
+    <line x1="120" y1="120" x2="120" y2="135"/>
+    <line x1="135" y1="120" x2="135" y2="135"/>
+    <line x1="150" y1="120" x2="150" y2="135"/>
+    <line x1="165" y1="120" x2="165" y2="135"/>
+    <!-- hanging lanterns -->
+    <ellipse cx="50" cy="170" rx="10" ry="14" />
+    <line x1="50" y1="140" x2="50" y2="155"/>
+    <ellipse cx="130" cy="180" rx="9" ry="12" />
+    <line x1="130" y1="140" x2="130" y2="167"/>
+    <!-- bicycle -->
+    <circle cx="55" cy="375" r="14"/>
+    <circle cx="120" cy="375" r="14"/>
+    <line x1="55" y1="375" x2="90" y2="345"/>
+    <line x1="120" y1="375" x2="90" y2="345"/>
+    <line x1="85" y1="345" x2="105" y2="335"/>
+    <line x1="55" y1="375" x2="75" y2="350"/>
+  </svg>
+
+  <div class="cover__inner">
+    <!-- circular bowl + botanical icon -->
+    <svg class="cover__icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- conical hat over bowl -->
+      <path d="M30 48 L50 18 L70 48 Z"/>
+      <path d="M30 48 Q50 56 70 48"/>
+      <!-- bowl -->
+      <path d="M22 50 Q50 80 78 50"/>
+      <path d="M22 50 L78 50"/>
+      <!-- steam swirls -->
+      <path d="M40 12 Q44 8 40 4"/>
+      <path d="M50 10 Q54 6 50 2"/>
+      <path d="M60 12 Q64 8 60 4"/>
+      <!-- botanical sprig right -->
+      <path d="M78 32 Q86 28 92 22"/>
+      <ellipse cx="84" cy="26" rx="3" ry="1.5" transform="rotate(-25 84 26)"/>
+      <ellipse cx="89" cy="22" rx="3" ry="1.5" transform="rotate(-30 89 22)"/>
+    </svg>
+
+    <div class="cover__brand">GRANDPA</div>
+    <div class="cover__title">TÁO</div>
+    <div class="cover__title-script">Kitchen</div>
+
+    <div class="cover__rule"></div>
+    <div class="cover__tagline">Asian Fusion · Pho · Tea · Sushi</div>
+
+    <!-- chop / seal -->
+    <svg class="cover__seal" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2" y="2" width="36" height="36" rx="2"/>
+      <line x1="20" y1="6" x2="20" y2="34"/>
+      <line x1="6" y1="20" x2="34" y2="20"/>
+      <text x="11" y="16" font-family="serif" font-size="10" font-weight="700" fill="currentColor" stroke="none">福</text>
+      <text x="23" y="16" font-family="serif" font-size="10" font-weight="700" fill="currentColor" stroke="none">寿</text>
+      <text x="11" y="32" font-family="serif" font-size="10" font-weight="700" fill="currentColor" stroke="none">家</text>
+      <text x="23" y="32" font-family="serif" font-size="10" font-weight="700" fill="currentColor" stroke="none">門</text>
+    </svg>
+  </div>
+
+  <div class="cover__est">EST · EL CAJON · 2016</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 2 — WELCOME (STORY)
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page__inner welcome">
+    <svg class="corner-flourish corner-flourish--tl" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="0.9" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 14 Q2 2 14 2 L38 2"/>
+      <path d="M8 38 L8 18 Q8 8 18 8 L38 8"/>
+      <circle cx="18" cy="18" r="3"/>
+    </svg>
+    <svg class="corner-flourish corner-flourish--br" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="0.9" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 14 Q2 2 14 2 L38 2"/>
+      <path d="M8 38 L8 18 Q8 8 18 8 L38 8"/>
+      <circle cx="18" cy="18" r="3"/>
+    </svg>
+
+    <span class="eyebrow">Welcome to</span>
+    <h1>Grandpa Táo Kitchen</h1>
+    <span class="h-script">— Asian fusion, El Cajon —</span>
+
+    <p class="lead">
+      One kitchen. Many traditions. We cook what we love to eat.
+    </p>
+
+    <p>
+      Our menu draws from <strong>Vietnam first</strong> — slow-simmered phở, fresh bún bowls, lemongrass marinades, and bánh mì pressed to order — and from the wider Asian table our cooks grew up with: <strong>Cantonese fried rice, Japanese sushi, Thai-style iced tea</strong>, and the kind of crispy chicken you crave on a Tuesday night.
+    </p>
+
+    <p>
+      We use top-quality ingredients, cook everything to order, and don't shortcut the broth — twelve hours, every morning. Whether you're here for a quick bánh mì at lunch or a long phở at the end of a long day, we're glad you came.
+    </p>
+
+    <p>
+      If you don't see what you want, ask. We'll make it the way you like.
+    </p>
+
+    <div class="signoff">— from the kitchen of Grandpa Táo</div>
+
+    <p style="font:italic 400 10px/1.4 'Playfair Display',serif;color:var(--ink-soft);margin:24px 0 0;letter-spacing:0.5px;opacity:0.7;">
+      <em>ông táo</em> · the kitchen god
+    </p>
+
+    <div class="page-num">02</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 3 — HERO IMAGE / DARK SPREAD
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page hero-page">
+  <div class="hero-page__bg"></div>
+  <div class="hero-page__overlay">
+    <span class="eyebrow">Chef's table</span>
+    <h2>Five things you<br>shouldn't miss</h2>
+    <span class="h-script">— grandpa's favorites —</span>
+    <p>
+      If it's your first time with us, start here. These are the five dishes we'd
+      put in front of family — the ones that built our reputation, and the ones we
+      eat ourselves on a long Sunday afternoon. Each one is marked
+      <span class="flag flag--star" style="background:#d4af37;color:#1a1a1a;">★</span>
+      throughout the menu.
+    </p>
+    <div style="margin-top:28px; display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; max-width:6in;">
+      <div style="border-top:1px solid #d4af37; padding-top:8px;">
+        <div style="font:600 9px/1.2 'Inter';letter-spacing:1.5px;color:#d4af37;text-transform:uppercase;">R24</div>
+        <div style="font:600 12px/1.3 'Inter';color:#f5f0e8;margin-top:4px;">Shaking<br>Beef</div>
+      </div>
+      <div style="border-top:1px solid #d4af37; padding-top:8px;">
+        <div style="font:600 9px/1.2 'Inter';letter-spacing:1.5px;color:#d4af37;text-transform:uppercase;">N7</div>
+        <div style="font:600 12px/1.3 'Inter';color:#f5f0e8;margin-top:4px;">Garlic<br>Noodles</div>
+      </div>
+      <div style="border-top:1px solid #d4af37; padding-top:8px;">
+        <div style="font:600 9px/1.2 'Inter';letter-spacing:1.5px;color:#d4af37;text-transform:uppercase;">V10</div>
+        <div style="font:600 12px/1.3 'Inter';color:#f5f0e8;margin-top:4px;">Lemongrass<br>Bún</div>
+      </div>
+      <div style="border-top:1px solid #d4af37; padding-top:8px;">
+        <div style="font:600 9px/1.2 'Inter';letter-spacing:1.5px;color:#d4af37;text-transform:uppercase;">D2</div>
+        <div style="font:600 12px/1.3 'Inter';color:#f5f0e8;margin-top:4px;">Cà Phê<br>Sữa Đá</div>
+      </div>
+      <div style="border-top:1px solid #d4af37; padding-top:8px;">
+        <div style="font:600 9px/1.2 'Inter';letter-spacing:1.5px;color:#d4af37;text-transform:uppercase;">A2</div>
+        <div style="font:600 12px/1.3 'Inter';color:#f5f0e8;margin-top:4px;">Crispy<br>Egg Rolls</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">03</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 4 — APPETIZERS (Khai Vị) Part 1
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head" style="text-align:center;">
+      <span class="eyebrow">No. 01</span>
+      <h2 style="text-align:center;">Appetizers</h2>
+      <span class="vi">Khai Vị · to begin</span>
+    </div>
+
+    <div class="items">
+      <div class="item">
+        <div class="item__name">A1 · Special Appetizer</div>
+        <div class="item__price">12.00</div>
+        <p class="item__desc">Two crispy golden egg rolls with tangy fish sauce, and two fresh spring rolls with creamy peanut sauce. A bit of crunch, a bit of fresh — a generous way to start.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A2 · Crispy Egg Rolls <span class="vi">Chả Giò</span> <span class="item__flags"><span class="flag flag--star">★</span></span></div>
+        <div class="item__price">9.50</div>
+        <p class="item__desc">Four golden rolls filled with pork, chicken, taro, and carrot. Served with fresh lettuce and a light fish sauce. One of grandpa's favorites.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A3 · Half Order of Crispy Egg Rolls</div>
+        <div class="item__price">5.50</div>
+        <p class="item__desc">Two crispy rolls with lettuce and light fish sauce. Available regular or vegetarian.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A4 · Vegetarian Egg Rolls <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+        <div class="item__price">9.50</div>
+        <p class="item__desc">Four crispy rolls filled with taro, carrot and glass noodles. Lettuce and light fish sauce on the side.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A5 · Spring Rolls <span class="vi">Gỏi Cuốn</span></div>
+        <div class="item__price">8.50</div>
+        <p class="item__desc">Two rice-paper rolls with your choice of protein, vermicelli, basil and bean sprouts. Served with peanut sauce.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A7 · Fried Battered Shrimp</div>
+        <div class="item__price">12.99</div>
+        <p class="item__desc">Shrimp in a light golden batter, with sweet chili sauce.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A8 · Crispy Tofu, Garlic &amp; Pepper <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+        <div class="item__price">10.99</div>
+        <p class="item__desc">Cubes of crispy tofu with aromatic garlic and freshly cracked pepper. Sweet chili on the side.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A9 · Crispy Fried Chicken Wings (6)</div>
+        <div class="item__price">12.99</div>
+        <p class="item__desc">Six wings battered and sautéed with onions until crisp and savory.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A10 · Potstickers (8)</div>
+        <div class="item__price">11.50</div>
+        <p class="item__desc">Pan-fried pork dumplings with ponzu dipping sauce — a bit of crisp, a bit of chew.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">A16 · Crab Rangoon (6)</div>
+        <div class="item__price">8.50</div>
+        <p class="item__desc">Golden wontons stuffed with crab and rich cream cheese.</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><span class="flag flag--star">★</span> Grandpa's pick</span>
+      <span><span class="flag flag--spicy">🌶</span> Spicy</span>
+      <span><span class="flag flag--veg">VEG</span> Vegetarian</span>
+    </div>
+    <div class="page-num">04</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 5 — APPETIZERS Part 2 + SOUPS & SALADS
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page page--cream-dk">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 01 · continued</span>
+      <h2>Soups &amp; Salads</h2>
+      <span class="vi">small plates, light bites</span>
+    </div>
+
+    <div class="cols-2">
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:0 0 14px;">Soups · Súp</h3>
+        <div class="item">
+          <div class="item__name">A11 · Miso Soup <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">7.00</div>
+          <p class="item__desc">Warm savory broth with tofu, seaweed, and green onion.</p>
+        </div>
+        <div class="item">
+          <div class="item__name">A15 · Egg Soup</div>
+          <div class="item__price">7.50</div>
+          <p class="item__desc">Beaten egg in rich chicken broth with spring onion and crispy wonton strips.</p>
+        </div>
+
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:28px 0 14px;">Edamame &amp; Greens</h3>
+        <div class="item">
+          <div class="item__name">A12 · Edamame with Salt <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">9.00</div>
+          <p class="item__desc">Steamed young soybeans, salted.</p>
+        </div>
+        <div class="item">
+          <div class="item__name">A13 · Spicy Garlic Edamame <span class="item__flags"><span class="flag flag--spicy">🌶</span><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">10.00</div>
+          <p class="item__desc">Edamame sautéed with garlic and chili flakes — a bit more kick.</p>
+        </div>
+        <div class="item">
+          <div class="item__name">A14 · Seaweed Salad <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">8.50</div>
+          <p class="item__desc">Seaweed garnished with sesame seeds for crunch.</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:0 0 14px;">House Salads</h3>
+        <p style="font:400 11px/1.5 'Inter';color:#5b4a3e;margin:0 0 16px;font-style:italic;">A crisp salad of fresh vegetables — choose your protein.</p>
+
+        <div class="item">
+          <div class="item__name">A21 · Tofu <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">9.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">A17 · Pork</div>
+          <div class="item__price">10.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">A18 · Chicken</div>
+          <div class="item__price">10.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">A19 · Beef</div>
+          <div class="item__price">11.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">A20 · Shrimp</div>
+          <div class="item__price">11.99</div>
+        </div>
+
+        <div class="footnote" style="text-align:left;margin-top:32px;">
+          Looking for something between bites? Try the spicy garlic edamame
+          alongside an iced cà phê sữa đá — the way grandpa always did it.
+        </div>
+      </div>
+    </div>
+    <div class="page-num">05</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 6 — PHỞ classics
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 02</span>
+      <h2>Phở</h2>
+      <span class="vi">slow-simmered noodle soup · made fresh every morning</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 2in;gap:18px;align-items:start;margin-bottom:12px;">
+      <p style="font:400 11px/1.6 'Inter';font-style:italic;color:#5b4a3e;margin:0;">
+        All bowls are served with fresh basil, bean sprouts, lime, jalapeño, and our house chili and hoisin. The broth simmers for twelve hours, every morning.
+      </p>
+      <div class="img-ph" style="height:1.6in;">
+        <strong>Photo · Phở Tái</strong>
+        Overhead bowl, warm broth steam, fresh garnish · 300dpi
+      </div>
+    </div>
+
+    <div class="items">
+      <div class="item">
+        <div class="item__name">P3 · Rare Steak <span class="vi">Phở Tái</span></div>
+        <div class="item__price">14.99</div>
+        <p class="item__desc">Thin rare steak cooked gently in the hot broth for a silky, tender texture.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P2 · Well Done Steak <span class="vi">Phở Chín</span></div>
+        <div class="item__price">14.99</div>
+        <p class="item__desc">Slices of fully cooked beef — full of flavor, with no raw cuts.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P4 · Rare Steak &amp; Well Done <span class="vi">Phở Tái Chín</span></div>
+        <div class="item__price">15.50</div>
+        <p class="item__desc">A balanced bowl with both tender rare and fully cooked beef.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P1 · House Special <span class="vi">Phở Đặc Biệt</span></div>
+        <div class="item__price">16.50</div>
+        <p class="item__desc">Rare steak, chicken, and shrimp together — a bit of everything in one bowl.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P5 · Combination Special</div>
+        <div class="item__price">16.50</div>
+        <p class="item__desc">Rare steak, fatty brisket, tendon, tripe, and beef meatballs in a rich broth — for those who want it all.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P14 · Meatballs <span class="vi">Phở Bò Viên</span></div>
+        <div class="item__price">14.75</div>
+        <p class="item__desc">Beef meatballs in savory broth — simple, satisfying, with a bit of bite.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P16 · Tendon <span class="vi">Phở Gân</span></div>
+        <div class="item__price">16.50</div>
+        <p class="item__desc">Beef tendon, soft and gelatinous — for those who love traditional cuts.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P17 · Tendon &amp; Tripe <span class="vi">Phở Gân Sách</span></div>
+        <div class="item__price">17.50</div>
+        <p class="item__desc">A traditional pairing with rich flavor and unique textures.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P6 · Chicken <span class="vi">Phở Gà</span></div>
+        <div class="item__price">15.00</div>
+        <p class="item__desc">Sliced chicken in a lighter savory broth.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P7 · Shrimp</div>
+        <div class="item__price">15.50</div>
+        <p class="item__desc">Tender shrimp with a hint of natural sweetness from the seafood.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P8 · Seafood <span class="vi">Phở Hải Sản</span></div>
+        <div class="item__price">15.50</div>
+        <p class="item__desc">Shrimp, fish balls, imitation crab, and squid in savory broth.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P9 · Vegetable &amp; Tofu <span class="vi">Phở Chay</span> <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+        <div class="item__price">14.75</div>
+        <p class="item__desc">Tofu and vegetables in a lighter broth (beef, chicken, or vegetarian).</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P15 · No Meat <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+        <div class="item__price">13.75</div>
+        <p class="item__desc">A meatless bowl with your choice of broth — light, but full of flavor.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:10px 14px;background:#ede6d8;border-left:2px solid #d4af37;font:500 10px/1.6 'Inter';color:#5b4a3e;letter-spacing:0.3px;">
+      <strong style="color:#b8932e;text-transform:uppercase;letter-spacing:1.5px;font-size:9px;">Extras &nbsp;·</strong>
+      Extra protein $4 &nbsp;·&nbsp; extra vegetables $3 &nbsp;·&nbsp; side of beef broth $4 &nbsp;·&nbsp; side of chicken broth $4
+    </div>
+
+    <div class="page-num">06</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 7 — PHỞ Chef's Specials (dark)
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page page--dark">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 02 · continued</span>
+      <h2>Chef's Phở</h2>
+      <span class="vi">house specials &amp; premium cuts</span>
+    </div>
+
+    <p style="font:400 11px/1.6 'Inter';font-style:italic;color:rgba(237,230,216,0.7);margin:0 0 18px;text-align:center;">
+      For the regulars and the curious — a few small twists on the classic bowl.
+    </p>
+
+    <div class="favorite">
+      <span class="favorite__price">$19.50</span>
+      <span class="eyebrow">Chef's special <span class="flag flag--star" style="background:#d4af37;color:#1a1a1a;margin-left:6px;">★</span></span>
+      <div class="favorite__name">P12 · Garlic Wok-seared Filet Mignon</div>
+      <p class="favorite__desc">Filet mignon seared in a hot wok with garlic, then laid over the noodles in beef broth. A savory depth and aroma you can smell three tables away — the most-asked-for upgrade.</p>
+    </div>
+
+    <div class="items">
+      <div class="item">
+        <div class="item__name">P10 · Filet Mignon</div>
+        <div class="item__price">17.75</div>
+        <p class="item__desc">Tender slices of filet mignon in beef broth — simple, rich, for beef lovers.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P11 · Saté Spicy Rare Steak &amp; Shrimp <span class="item__flags"><span class="flag flag--spicy">🌶</span></span></div>
+        <div class="item__price">17.75</div>
+        <p class="item__desc">Spicy beef broth with rare steak and shrimp — a bold kick without being too heavy.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">P13 · Beef Ribs</div>
+        <div class="item__price">19.50</div>
+        <p class="item__desc">Slow-cooked beef ribs in rich broth — hearty, tender meat on the bone.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.3);padding:20px;border-radius:4px;">
+      <span class="eyebrow" style="color:#d4af37;">From grandpa</span>
+      <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:15px;line-height:1.55;color:#f5f0e8;margin:8px 0 0;">
+        "The broth takes twelve hours. There is no shortcut. If it tastes thin, you didn't wait long enough."
+      </p>
+    </div>
+    <div class="page-num">07</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 8 — RICE PLATES
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 03</span>
+      <h2>Rice Plates</h2>
+      <span class="vi">Cơm Dĩa · served with jasmine rice</span>
+    </div>
+
+    <div class="cols-2">
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:0 0 14px;">Grilled · Nướng</h3>
+        <div class="item">
+          <div class="item__name">R1 · BBQ Pork <span class="vi">Sườn Nướng</span></div>
+          <div class="item__price">14.75</div>
+          <p class="item__desc">Over rice with lettuce, cucumber, pickled daikon and tomato. Fish sauce on the side.</p>
+        </div>
+        <div class="item">
+          <div class="item__name">R2 · BBQ Chicken <span class="vi">Gà Nướng</span></div>
+          <div class="item__price">14.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R3 · BBQ Beef <span class="vi">Bò Nướng</span></div>
+          <div class="item__price">16.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R15 · Grilled Shrimp &amp; Egg Rolls</div>
+          <div class="item__price">15.75</div>
+          <p class="item__desc">Grilled shrimp and crispy egg rolls over rice with fresh vegetables.</p>
+        </div>
+
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:24px 0 14px;">Lemongrass &amp; Curry</h3>
+        <div class="item">
+          <div class="item__name">R9 · Lemongrass Chicken <span class="item__flags"><span class="flag flag--spicy">🌶</span></span></div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R10 · Lemongrass Beef <span class="item__flags"><span class="flag flag--spicy">🌶</span></span></div>
+          <div class="item__price">15.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R11 · Curry Chicken</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R12 · Curry Beef</div>
+          <div class="item__price">15.25</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:0 0 14px;">Stir-fry · Xào</h3>
+        <p style="font:400 11px/1.5 'Inter';color:#5b4a3e;margin:0 0 12px;font-style:italic;">All stir-fries with mixed vegetables over steamed rice — $15.25</p>
+        <div class="item">
+          <div class="item__name">R4 · Beef &amp; Vegetables</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R5 · Chicken &amp; Vegetables</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R6 · Shrimp &amp; Vegetables</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R7 · Seafood &amp; Vegetables</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R8 · Tofu &amp; Vegetables <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">15.25</div>
+        </div>
+
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:24px 0 14px;">House Favorites</h3>
+        <div class="item">
+          <div class="item__name">R13 · Orange Chicken</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R19 · Orange Tofu <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R20 · Sesame Chicken</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R21 · General Tso Chicken</div>
+          <div class="item__price">15.25</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R22 · Beef Teriyaki</div>
+          <div class="item__price">15.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">R23 · Chicken Teriyaki</div>
+          <div class="item__price">15.25</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:10px 14px;background:#ede6d8;border-left:2px solid #d4af37;font:500 10px/1.5 'Inter';color:#5b4a3e;letter-spacing:0.3px;">
+      <strong style="color:#b8932e;text-transform:uppercase;letter-spacing:1.5px;font-size:9px;">Extras &nbsp;·</strong>
+      Extra protein $4 &nbsp;·&nbsp; extra vegetables $3 &nbsp;·&nbsp; add egg $2 &nbsp;·&nbsp; side of peanut sauce $1 &nbsp;·&nbsp; side of beef or chicken broth $4
+    </div>
+
+    <div class="page-num">08</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 9 — SHAKING BEEF feature (dark)
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page page--dark">
+  <div class="page__inner" style="justify-content:center;">
+    <svg class="corner-flourish corner-flourish--tl" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="0.9" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 14 Q2 2 14 2 L38 2"/>
+      <path d="M8 38 L8 18 Q8 8 18 8 L38 8"/>
+      <circle cx="18" cy="18" r="3"/>
+    </svg>
+    <svg class="corner-flourish corner-flourish--br" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="0.9" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 14 Q2 2 14 2 L38 2"/>
+      <path d="M8 38 L8 18 Q8 8 18 8 L38 8"/>
+      <circle cx="18" cy="18" r="3"/>
+    </svg>
+
+    <div style="text-align:center;max-width:5in;margin:0 auto;">
+      <span class="eyebrow" style="color:#d4af37;letter-spacing:4px;">— signature dish —</span>
+      <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:72px;line-height:1;margin:24px 0 8px;color:#f5f0e8;letter-spacing:-1.5px;">Shaking Beef</div>
+      <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:rgba(245,240,232,0.7);margin-bottom:24px;">Bò Lúc Lắc</div>
+
+      <div style="display:flex;align-items:center;gap:14px;justify-content:center;margin:18px 0 28px;color:#d4af37;">
+        <div style="height:1px;width:50px;background:#d4af37;opacity:0.5;"></div>
+        <span style="font:500 11px/1 'Inter';letter-spacing:4px;text-transform:uppercase;">R24 · $18.25</span>
+        <div style="height:1px;width:50px;background:#d4af37;opacity:0.5;"></div>
+      </div>
+
+      <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.55;color:#ede6d8;max-width:4.5in;margin:0 auto 24px;">
+        Filet mignon shaken in a roaring hot skillet with garlic, butter, and freshly
+        cracked black pepper. Served sizzling on a cast-iron plate over a bed of
+        watercress, with steamed jasmine rice on the side.
+      </p>
+      <p style="font:400 13px/1.7 'Inter';color:rgba(237,230,216,0.7);max-width:4.5in;margin:0 auto;">
+        The name comes from the motion — we shake the pan, hard, while the meat
+        sears. The result is a crust on the outside and a blush of pink inside, the
+        kind of dish that gets people leaning over from the next table to ask what
+        you ordered.
+      </p>
+    </div>
+    <div class="page-num">09</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 10 — NOODLES & GARLIC
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 04</span>
+      <h2>Noodles</h2>
+      <span class="vi">Mì Xào Đơn Hoặc Mềm · wok-tossed egg noodles</span>
+    </div>
+
+    <p style="font:400 11px/1.6 'Inter';font-style:italic;color:#5b4a3e;margin:0 0 16px;text-align:center;">
+      Stir-fried noodles cooked with broccoli, onions, carrots, and our chef's secret sauce.
+    </p>
+
+    <div class="favorite">
+      <span class="favorite__price">$19.50</span>
+      <span class="eyebrow">Signature · garlic noodles served with butter <span class="flag flag--star" style="margin-left:6px;">★</span></span>
+      <div class="favorite__name">N7 · Garlic Noodles w/ Shaking Filet Mignon</div>
+      <p class="favorite__desc">Our signature buttery garlic noodles, topped with the same shaking filet mignon from Page 09. Rich, crunchy, full of garlic-pepper kick.</p>
+      <span class="favorite__tag">— our house favorite</span>
+    </div>
+
+    <div class="cols-2">
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:8px 0 14px;">Garlic Noodles · with butter</h3>
+        <div class="item">
+          <div class="item__name">N8 · Garlic Noodles w/ Grilled Shrimp <span class="item__flags"><span class="flag flag--star">★</span></span></div>
+          <div class="item__price">17.50</div>
+          <p class="item__desc">The signature noodle base in a lighter pairing.</p>
+        </div>
+      </div>
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:8px 0 14px;">Stir-fried Egg Noodles</h3>
+        <div class="item">
+          <div class="item__name">N1 · Beef <span class="vi">Mì Xào Bò</span></div>
+          <div class="item__price">15.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">N2 · Chicken <span class="vi">Mì Xào Gà</span></div>
+          <div class="item__price">15.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">N3 · Shrimp <span class="vi">Mì Xào Tôm</span></div>
+          <div class="item__price">15.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">N4 · Seafood <span class="vi">Mì Xào Hải Sản</span></div>
+          <div class="item__price">15.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">N5 · Vegetables &amp; Tofu <span class="vi">Mì Xào Chay</span> <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">14.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">N6 · Meat &amp; Seafood</div>
+          <div class="item__price">16.75</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:10px 14px;background:#ede6d8;border-left:2px solid #d4af37;font:500 10px/1.5 'Inter';color:#5b4a3e;letter-spacing:0.3px;">
+      <strong style="color:#b8932e;text-transform:uppercase;letter-spacing:1.5px;font-size:9px;">Extras &nbsp;·</strong>
+      Extra protein $4 &nbsp;·&nbsp; extra vegetables $3 &nbsp;·&nbsp; add egg $2 &nbsp;·&nbsp; side of peanut sauce $1 &nbsp;·&nbsp; side of beef or chicken broth $4
+    </div>
+
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 11 — FRIED RICE
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page page--cream-dk">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 05</span>
+      <h2>Fried Rice</h2>
+      <span class="vi">Cơm Chiên · wok-fried jasmine rice with egg</span>
+    </div>
+
+    <p style="font:400 11px/1.6 'Inter';font-style:italic;color:#5b4a3e;margin:-12px 0 24px;">
+      Tossed in a hot wok over high heat — smoky, savory, and never sticky.
+    </p>
+
+    <div class="items">
+      <div class="item">
+        <div class="item__name">F1 · Beef</div>
+        <div class="item__price">15.99</div>
+      </div>
+      <div class="item">
+        <div class="item__name">F2 · Chicken</div>
+        <div class="item__price">15.50</div>
+      </div>
+      <div class="item">
+        <div class="item__name">F3 · Shrimp</div>
+        <div class="item__price">16.25</div>
+      </div>
+      <div class="item">
+        <div class="item__name">F5 · Seafood</div>
+        <div class="item__price">16.25</div>
+      </div>
+      <div class="item">
+        <div class="item__name">F4 · Special Combo — Beef, Chicken &amp; Shrimp</div>
+        <div class="item__price">16.75</div>
+      </div>
+      <div class="item">
+        <div class="item__name">F6 · Char Siu Pork</div>
+        <div class="item__price">15.75</div>
+        <p class="item__desc">Cantonese-style sweet BBQ pork stir-fried into the rice.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">F7 · Yáng Châu</div>
+        <div class="item__price">15.75</div>
+        <p class="item__desc">Classic Yang Chow — char siu, shrimp, scallion, and egg.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">F8 · Vegetable <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+        <div class="item__price">15.75</div>
+      </div>
+    </div>
+
+    <div class="footnote" style="margin-top:24px;text-align:left;">
+      Want to upgrade? Add an extra egg ($2), shrimp ($4), or filet mignon ($6) to any fried-rice plate.
+    </div>
+
+    <div style="margin-top:14px;padding:10px 14px;background:#e5d9c5;border-left:2px solid #d4af37;font:500 10px/1.5 'Inter';color:#5b4a3e;letter-spacing:0.3px;">
+      <strong style="color:#b8932e;text-transform:uppercase;letter-spacing:1.5px;font-size:9px;">Extras &nbsp;·</strong>
+      Extra protein $4 &nbsp;·&nbsp; extra vegetables $3 &nbsp;·&nbsp; add egg $2 &nbsp;·&nbsp; side of peanut sauce $1 &nbsp;·&nbsp; side of beef or chicken broth $4
+    </div>
+
+    <div class="page-num">11</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 12 — VERMICELLI BOWLS (Bún) — hero split layout
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <div class="hero-split">
+      <!-- LEFT: hero image + intro -->
+      <div class="hero-split__left">
+        <svg class="brand-mark-sm" style="margin:0 0 12px 0;"><use href="#brand-mark"/></svg>
+        <span class="eyebrow" style="display:block;margin-bottom:8px;">No. 06</span>
+        <h2 class="hero-split__title">Vermicelli<br>Bowls</h2>
+        <span class="hero-split__sub">Bún · cool noodles, fresh herbs</span>
+        <p class="hero-split__intro">
+          Cool rice vermicelli, lettuce, cucumber, mint, basil, bean sprouts, and roasted peanuts — with your protein on top and fish sauce on the side. The contrast of warm protein and cool noodles is the whole point.
+        </p>
+
+        <div class="img-ph" style="margin-top:8px;flex:1;min-height:3.6in;">
+          <strong>Photo · V10 Lemongrass Beef</strong>
+          Bún Bò Xào Sả overhead, hot beef on cool noodles, fresh herbs · 300dpi, full-bleed within block
+        </div>
+
+        <div class="favorite" style="margin-top:14px;">
+          <span class="favorite__price">$16.75</span>
+          <span class="eyebrow">Signature <span class="flag flag--star" style="margin-left:6px;">★</span></span>
+          <div class="favorite__name">V10 · Lemongrass Beef <span class="vi">Bún Bò Xào Sả</span></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: full item list -->
+      <div>
+        <h3 class="subhead" style="border-bottom:1px solid var(--rule);padding-bottom:4px;">
+          <svg class="section-icon"><use href="#icon-flame"/></svg>
+          Grilled
+        </h3>
+        <div class="item">
+          <div class="item__name">V1 · BBQ Pork <span class="vi">Bún Thịt Nướng</span></div>
+          <div class="item__price">15.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V2 · BBQ Chicken</div>
+          <div class="item__price">15.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V3 · BBQ Beef</div>
+          <div class="item__price">16.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V4 · BBQ Shrimp</div>
+          <div class="item__price">15.75</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V5 · Crispy Fried Tofu <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">15.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V11 · Lemongrass Chicken</div>
+          <div class="item__price">16.00</div>
+        </div>
+
+        <h3 class="subhead-sm" style="border-bottom:1px solid var(--rule);padding-bottom:4px;">
+          <svg class="section-icon"><use href="#icon-bowl"/></svg>
+          With Egg Rolls
+        </h3>
+        <p style="font:400 10px/1.4 'Inter';color:#5b4a3e;margin:0 0 8px;font-style:italic;">Same bowl, with two of our crispy egg rolls on top.</p>
+        <div class="item">
+          <div class="item__name">V6 · BBQ Pork &amp; Egg Rolls</div>
+          <div class="item__price">16.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V7 · BBQ Chicken &amp; Egg Rolls</div>
+          <div class="item__price">16.00</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V8 · BBQ Beef &amp; Egg Rolls</div>
+          <div class="item__price">16.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">V9 · BBQ Shrimp &amp; Egg Rolls</div>
+          <div class="item__price">16.50</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:10px 14px;background:#ede6d8;border-left:2px solid #d4af37;font:500 10px/1.5 'Inter';color:#5b4a3e;letter-spacing:0.3px;">
+      <strong style="color:#b8932e;text-transform:uppercase;letter-spacing:1.5px;font-size:9px;">Extras &nbsp;·</strong>
+      Extra protein $4 &nbsp;·&nbsp; extra vegetables $3 &nbsp;·&nbsp; add egg $2 &nbsp;·&nbsp; side of peanut sauce $1 &nbsp;·&nbsp; side of beef or chicken broth $4
+    </div>
+
+    <div class="page-num">12</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 13 — BÁNH MÌ SANDWICHES — hero split layout
+     (customers often don't know what bánh mì is — image leads here)
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page page--cream-dk">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <div class="hero-split">
+      <!-- LEFT: hero image + intro -->
+      <div class="hero-split__left">
+        <svg class="brand-mark-sm" style="margin:0 0 12px 0;"><use href="#brand-mark"/></svg>
+        <span class="eyebrow" style="display:block;margin-bottom:8px;">No. 07</span>
+        <h2 class="hero-split__title">Bánh Mì</h2>
+        <span class="hero-split__sub">crusty Vietnamese baguette, pressed warm</span>
+        <p class="hero-split__intro">
+          A Vietnamese-style sandwich on a crusty fresh-baked baguette — with spicy mayo, pickled daikon &amp; carrot, jalapeño, cilantro, and cucumber. Fresh, tangy, and a little spicy in each bite. The kind of lunch that travels well.
+        </p>
+
+        <div class="img-ph" style="flex:1;min-height:4in;">
+          <strong>Photo · B1 BBQ Pork Bánh Mì</strong>
+          Side angle showing the cross-section: grilled pork, fresh herbs, pickled veg in the warm baguette · 300dpi
+          <small>This is the most important photo in the menu — customers often don't know what bánh mì is and need to see one.</small>
+        </div>
+
+        <div style="margin-top:14px;background:rgba(31,58,49,0.92);color:#f5f0e8;padding:10px 14px;border-left:3px solid #d4af37;border-radius:2px;">
+          <span class="eyebrow" style="color:#d4af37;font-size:9px;">For takeaway</span>
+          <p style="font:400 10px/1.5 'Inter';color:rgba(245,240,232,0.85);margin:4px 0 0;">
+            Every bánh mì wraps up beautifully. Ask the counter for an extra napkin and a Vietnamese iced coffee while you wait.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: full item list -->
+      <div>
+        <h3 class="subhead" style="border-bottom:1px solid var(--rule);padding-bottom:4px;">
+          <svg class="section-icon"><use href="#icon-flame"/></svg>
+          Grilled
+        </h3>
+        <div class="item">
+          <div class="item__name">B1 · BBQ Pork <span class="item__flags"><span class="flag flag--star">★</span></span></div>
+          <div class="item__price">8.99</div>
+          <p class="item__desc">The classic — marinated grilled pork, the most-ordered.</p>
+        </div>
+        <div class="item">
+          <div class="item__name">B2 · BBQ Chicken</div>
+          <div class="item__price">8.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">B3 · BBQ Beef</div>
+          <div class="item__price">9.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">B4 · BBQ Shrimp</div>
+          <div class="item__price">9.50</div>
+        </div>
+
+        <h3 class="subhead-sm" style="border-bottom:1px solid var(--rule);padding-bottom:4px;">
+          <svg class="section-icon"><use href="#icon-baguette"/></svg>
+          House &amp; Lemongrass
+        </h3>
+        <div class="item">
+          <div class="item__name">B7 · Lemongrass Beef</div>
+          <div class="item__price">10.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">B8 · Lemongrass Chicken</div>
+          <div class="item__price">9.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">B5 · Fried Egg <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">8.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">B6 · Tofu <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+          <div class="item__price">8.99</div>
+        </div>
+
+        <div style="margin-top:18px;padding:8px 12px;background:#ede6d8;border-left:2px solid #d4af37;font:500 9.5px/1.45 'Inter';color:#5b4a3e;letter-spacing:0.2px;">
+          <strong style="color:#b8932e;text-transform:uppercase;letter-spacing:1.5px;font-size:8.5px;">Extras &nbsp;·</strong>
+          Extra protein $4 &nbsp;·&nbsp; veg $2 &nbsp;·&nbsp; egg $2 &nbsp;·&nbsp; peanut sauce $1 &nbsp;·&nbsp; broth $4
+        </div>
+      </div>
+    </div>
+    <div class="page-num">13</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 14 — SUSHI (minimal + small inline image)
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 08</span>
+      <h2>Sushi</h2>
+      <span class="vi">made fresh · ask about today's catch</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:2in 1fr;gap:24px;align-items:start;margin:8px 0 18px;">
+      <div class="img-ph" style="height:1.6in;">
+        <strong>Photo · S5 Tempura</strong>
+        Side angle, plated, sesame &amp; eel sauce drizzle
+      </div>
+      <div style="padding-top:8px;">
+        <p style="font:italic 12px/1.55 'Playfair Display',serif;color:var(--ink-soft);margin:0;">
+          A small, focused selection of rolls — made to order. If you don't see something you want, ask the kitchen; we'll usually make it.
+        </p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:14px;justify-content:center;margin:0 0 18px;">
+      <div style="height:1px;flex:1;max-width:80px;background:#d4af37;opacity:0.5;"></div>
+      <span style="font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:#b8932e;">— rolls of eight pieces —</span>
+      <div style="height:1px;flex:1;max-width:80px;background:#d4af37;opacity:0.5;"></div>
+    </div>
+
+    <div class="items" style="max-width:5.5in;margin:0 auto;width:100%;">
+      <div class="item">
+        <div class="item__name">S1 · Caterpillar Roll</div>
+        <div class="item__price">13.50</div>
+        <p class="item__desc">Eel, cucumber, cream cheese, imitation crab — topped with sliced avocado and a drizzle of eel sauce.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S2 · Cucumber Roll <span class="item__flags"><span class="flag flag--veg">VEG</span></span></div>
+        <div class="item__price">10.99</div>
+        <p class="item__desc">Light and crisp — cucumber, avocado, cream cheese, sushi rice, nori.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S3 · California Roll</div>
+        <div class="item__price">11.99</div>
+        <p class="item__desc">Imitation crab, avocado, cucumber, cream cheese — the familiar one.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S5 · Shrimp Tempura Roll</div>
+        <div class="item__price">11.99</div>
+        <p class="item__desc">Crispy shrimp tempura with avocado, cream cheese, cucumber, eel sauce.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S6 · Tuna Roll</div>
+        <div class="item__price">11.50</div>
+        <p class="item__desc">Fresh tuna, cream cheese, avocado, cucumber — straightforward.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S7 · Spicy Tuna Roll <span class="item__flags"><span class="flag flag--spicy">🌶</span></span></div>
+        <div class="item__price">11.50</div>
+        <p class="item__desc">Chopped tuna with a mild spicy sauce, rolled with sesame and nori.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S8 · Eel Roll</div>
+        <div class="item__price">12.99</div>
+        <p class="item__desc">Grilled eel, imitation crab, cream cheese, cucumber — finished with light eel sauce.</p>
+      </div>
+      <div class="item">
+        <div class="item__name">S4 · Poke Bowl</div>
+        <div class="item__price">13.99</div>
+        <p class="item__desc">Tuna, avocado, cream cheese, seaweed salad, cucumber, sesame — over rice, served chilled.</p>
+      </div>
+    </div>
+    <div class="page-num">14</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 15 — DRINKS, TEAS & BEVERAGES
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="shophouse-edge"><svg><use href="#shophouse"/></svg></div>
+  <div class="page__inner">
+    <svg class="brand-mark-sm"><use href="#brand-mark"/></svg>
+    <div class="section-head">
+      <span class="eyebrow">No. 09</span>
+      <h2>Drinks &amp; Tea</h2>
+      <span class="vi">Đồ Uống · house-made, brewed fresh</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.7in 1fr;gap:18px;align-items:stretch;margin-bottom:18px;">
+      <div class="img-ph" style="min-height:1.7in;">
+        <strong>Photo · D2 Cà Phê Sữa</strong>
+        3/4 angle, condensed milk swirl, iced
+      </div>
+      <div class="favorite" style="margin:0;">
+        <span class="favorite__price">$5.50</span>
+        <span class="eyebrow">Signature · iced or hot <span class="flag flag--star" style="margin-left:6px;">★</span></span>
+        <div class="favorite__name">D2 · Vietnamese Coffee w/ Condensed Milk</div>
+        <p class="favorite__desc">Cà Phê Sữa. Strong dark-roast coffee dripped slowly over sweetened condensed milk. The national afternoon ritual.</p>
+      </div>
+    </div>
+
+    <div class="cols-2" style="gap:0 36px;">
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:8px 0 14px;">Tea &amp; Cold Brews</h3>
+        <div class="item">
+          <div class="item__name">D3 · Jasmine Green Tea <span class="vi">iced or hot</span></div>
+          <div class="item__price">3.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D9 · Thai Iced Tea</div>
+          <div class="item__price">4.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D10 · Milk Tea</div>
+          <div class="item__price">4.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D11 · Taro Milk Tea</div>
+          <div class="item__price">4.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D12 · Mango Green Tea</div>
+          <div class="item__price">4.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D8 · Strawberry Peach Green Tea</div>
+          <div class="item__price">4.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D1 · Strawberry Basil Green Tea</div>
+          <div class="item__price">4.99</div>
+        </div>
+
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:24px 0 14px;">Beer &amp; Sake</h3>
+        <div class="item">
+          <div class="item__name">Beer <span class="vi">Sapporo · Corona · Modelo · Tsingtao</span></div>
+          <div class="item__price">5.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">Sake</div>
+          <div class="item__price">9.99</div>
+        </div>
+
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:24px 0 14px;">Wine</h3>
+        <div class="item">
+          <div class="item__name">Red Wine <span class="vi">Cabernet · Pinot Noir · Merlot · Malbec</span></div>
+          <div class="item__price">9.99 / 28.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">White Wine <span class="vi">Chardonnay · Sauv Blanc · Pinot Grigio · Prosecco · Rosé · Sparkling</span></div>
+          <div class="item__price">9.99 / 27.99</div>
+        </div>
+        <p style="font:400 9px/1.4 'Inter';color:#5b4a3e;margin:4px 0 0;font-style:italic;">Glass / Bottle</p>
+      </div>
+
+      <div>
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:8px 0 14px;">Lemonades</h3>
+        <div class="item">
+          <div class="item__name">D4 · Fresh Lemonade</div>
+          <div class="item__price">4.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D5 · Lemonade + Tea</div>
+          <div class="item__price">4.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D6 · Lemonade + Club Soda</div>
+          <div class="item__price">4.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D7 · Lemonade + Strawberry</div>
+          <div class="item__price">4.99</div>
+        </div>
+
+        <h3 style="font:600 11px/1 'Inter';letter-spacing:2px;color:#b8932e;text-transform:uppercase;margin:24px 0 14px;">Smoothies &amp; Fresh</h3>
+        <div class="item">
+          <div class="item__name">D14 · Fruit Smoothie</div>
+          <div class="item__price">6.50</div>
+          <p class="item__desc">Mango, taro, or strawberry.</p>
+        </div>
+        <div class="item">
+          <div class="item__name">D15 · Avocado Smoothie <span class="vi">Sinh Tố Bơ</span></div>
+          <div class="item__price">6.50</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D16 · Fresh Coconut <span class="vi">Dừa Tươi</span></div>
+          <div class="item__price">6.99</div>
+        </div>
+        <div class="item">
+          <div class="item__name">D13 · Canned Soda <span class="vi">Pepsi · Coke · Diet Coke · 7-Up · Sprite · Fanta</span></div>
+          <div class="item__price">2.50</div>
+        </div>
+
+        <div style="margin-top:24px;padding:10px 14px;background:#ede6d8;border-left:2px solid #d4af37;font:500 10px/1.6 'Inter';color:#5b4a3e;letter-spacing:0.3px;">
+          No refills on drinks &nbsp;·&nbsp; Add boba +$0.50
+        </div>
+      </div>
+    </div>
+    <div class="page-num">15</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 16 — CLOSING / THANK YOU
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page page--terracotta">
+  <div class="page__inner closing" style="color:#f5f0e8;">
+    <svg class="corner-flourish corner-flourish--tl" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="0.9" xmlns="http://www.w3.org/2000/svg" style="color:#d4af37;opacity:0.6;">
+      <path d="M2 38 L2 14 Q2 2 14 2 L38 2"/>
+      <path d="M8 38 L8 18 Q8 8 18 8 L38 8"/>
+      <circle cx="18" cy="18" r="3"/>
+    </svg>
+    <svg class="corner-flourish corner-flourish--br" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="0.9" xmlns="http://www.w3.org/2000/svg" style="color:#d4af37;opacity:0.6;">
+      <path d="M2 38 L2 14 Q2 2 14 2 L38 2"/>
+      <path d="M8 38 L8 18 Q8 8 18 8 L38 8"/>
+      <circle cx="18" cy="18" r="3"/>
+    </svg>
+
+    <div style="margin-top:1in;">
+      <span class="eyebrow" style="color:#d4af37;letter-spacing:4px;">— from our table to yours —</span>
+      <h1 style="color:#d4af37;font-size:84px;margin-top:20px;">Cảm ơn</h1>
+      <span class="h-script" style="font-size:46px;color:#f5f0e8;">thank you</span>
+    </div>
+
+    <svg class="ornament" viewBox="0 0 200 50" fill="none" stroke="currentColor" stroke-width="1" style="color:#d4af37;margin:36px auto;width:2in;display:block;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="25" x2="70" y2="25"/>
+      <line x1="130" y1="25" x2="200" y2="25"/>
+      <path d="M85 25 Q92 18 100 25 Q108 32 115 25"/>
+      <circle cx="100" cy="25" r="1.5" fill="currentColor"/>
+    </svg>
+
+    <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:17px;line-height:1.65;color:#f5f0e8;max-width:4.5in;margin:0 auto;">
+      We hope you leave a little fuller, a little slower, and a little closer to the
+      people you came in with. That's the only reason any of us cook.
+    </p>
+
+    <div class="info-grid" style="color:#f5f0e8;border-top:1px solid rgba(212,175,55,0.4);border-bottom:1px solid rgba(212,175,55,0.4);padding:18px 0;">
+      <div>
+        <span class="label" style="color:#d4af37;">Visit</span>
+        1190 N 2nd Street<br>El Cajon, CA 92021
+      </div>
+      <div>
+        <span class="label" style="color:#d4af37;">Call</span>
+        (619) 442-1211<br>order ahead by phone
+      </div>
+      <div>
+        <span class="label" style="color:#d4af37;">Hours</span>
+        Mon, Tue, Thu – Sun<br>11am – 9pm · closed Wed
+      </div>
+      <div>
+        <span class="label" style="color:#d4af37;">Find us</span>
+        Yelp · Google<br>Facebook · Instagram
+      </div>
+    </div>
+
+    <!-- QR codes -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:32px;padding:0 0.6in;">
+      <div style="text-align:center;">
+        <img src="QR_website_granpatao.png" alt="Order online" style="width:1.05in;height:1.05in;background:#fff;padding:6px;border-radius:3px;display:block;margin:0 auto 8px;">
+        <span style="font:600 9px/1 'Inter';letter-spacing:2.5px;text-transform:uppercase;color:#d4af37;display:block;margin-bottom:4px;">Order Online</span>
+        <span style="font:italic 10px/1.4 'Playfair Display',serif;color:rgba(245,240,232,0.8);">grandpa-tao-kitchen.square.site</span>
+      </div>
+      <div style="text-align:center;">
+        <img src="QR_instagram_grandpatao.png" alt="Follow on Instagram" style="width:1.05in;height:1.05in;background:#fff;padding:6px;border-radius:3px;display:block;margin:0 auto 8px;">
+        <span style="font:600 9px/1 'Inter';letter-spacing:2.5px;text-transform:uppercase;color:#d4af37;display:block;margin-bottom:4px;">Follow Us</span>
+        <span style="font:italic 10px/1.4 'Playfair Display',serif;color:rgba(245,240,232,0.8);">@grandpataokitchen</span>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;padding-top:20px;font:400 9px/1.5 'Inter';color:rgba(245,240,232,0.55);letter-spacing:1.5px;">
+      EST · EL CAJON · 2016 &nbsp;·&nbsp; family-owned · made fresh every day
+    </div>
+    <div class="page-num" style="color:rgba(245,240,232,0.6);">16</div>
+  </div>
+</div>
+
+</body>
+</html>
